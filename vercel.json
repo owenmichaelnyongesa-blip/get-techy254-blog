@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/", "destination": "/blog.html" }
+  ],
   "headers": [
     {
       "source": "/(.*\\.html)",
