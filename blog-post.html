@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title id="pageTitle">Article — Get.Techy254 Blog</title>
+  <meta name="description" id="pageDesc" content="Get.Techy254 Blog"/>
+  <link rel="stylesheet" href="blog-style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+</head>
+<body>
+
+<button id="backToTop" aria-label="Back to top">&#x2191;</button>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" id="mobClose">&#x2715;</button>
+  <a href="blog.html">Home</a>
+  <a href="blog.html?cat=web-dev">Web Dev</a>
+  <a href="blog.html?cat=mpesa">M-Pesa</a>
+  <a href="blog.html?cat=freelance">Freelance</a>
+</div>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span><a href="blog.html" style="color:rgba(250,247,242,0.6)">&#x2190; Back to Blog</a></span>
+  <div class="strip-right">
+    <a href="https://wa.me/254736566870" target="_blank">Hire Me</a>
+    <span class="strip-dot">&middot;</span>
+    <a href="blog-admin.html">&#x270E; Write</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <ul class="nav-links-left">
+      <li><a href="blog.html?cat=web-dev">Web Dev</a></li>
+      <li><a href="blog.html?cat=mpesa">M-Pesa</a></li>
+      <li><a href="blog.html?cat=freelance">Freelance</a></li>
+    </ul>
+    <a href="blog.html" class="nav-logo">Get<span>.</span>Techy<span>254</span></a>
+    <ul class="nav-links-right">
+      <li><a href="blog.html?cat=tools">Tools</a></li>
+      <li><a href="blog.html?cat=business">Business</a></li>
+    </ul>
+    <button class="hamburger" id="menuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ARTICLE HERO -->
+<div class="article-hero" id="articleHero">
+  <div class="article-hero-content">
+    <div class="article-category-tag" id="articleCat">Loading...</div>
+    <h1 class="article-headline" id="articleTitle">
+      <div class="skeleton" style="height:3rem;width:100%;margin-bottom:0.5rem"></div>
+      <div class="skeleton" style="height:3rem;width:80%"></div>
+    </h1>
+    <p class="article-standfirst" id="articleExcerpt"></p>
+    <div class="article-byline">
+      <div class="byline-avatar">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231A5C3A'/%3E%3Ctext x='20' y='26' font-size='16' text-anchor='middle' fill='white' font-family='serif'%3EN%3C/text%3E%3C/svg%3E" alt="Nyongesa Michael"/>
+      </div>
+      <div>
+        <div class="byline-name">Nyongesa Michael Owen</div>
+        <div class="byline-role">Get.Techy254 &mdash; Web &amp; Graphic Designer</div>
+      </div>
+      <div class="byline-date" id="articleDate"></div>
+    </div>
+  </div>
+  <div class="article-hero-image" id="heroImageWrap">
+    <img id="articleCoverImg" src="" alt="Article cover"/>
+  </div>
+</div>
+
+<!-- ARTICLE BODY + SIDEBAR -->
+<div class="article-body-wrap">
+  <article class="article-body" id="articleBody">
+    <div class="skeleton" style="height:1rem;width:100%;margin-bottom:1rem"></div>
+    <div class="skeleton" style="height:1rem;width:95%;margin-bottom:1rem"></div>
+    <div class="skeleton" style="height:1rem;width:88%;margin-bottom:2rem"></div>
+    <div class="skeleton" style="height:1.8rem;width:60%;margin-bottom:1rem"></div>
+    <div class="skeleton" style="height:1rem;width:100%;margin-bottom:1rem"></div>
+    <div class="skeleton" style="height:1rem;width:92%;margin-bottom:1rem"></div>
+    <div class="skeleton" style="height:1rem;width:80%"></div>
+  </article>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Read time + tags -->
+    <div class="sidebar-widget" id="articleMeta" style="border-top:2px solid var(--ink);padding-top:1rem">
+      <div class="sidebar-widget-title">Article Info</div>
+      <div style="display:flex;flex-direction:column;gap:0.6rem">
+        <div style="display:flex;justify-content:space-between;font-size:0.78rem">
+          <span style="color:var(--muted)">Read time</span>
+          <span id="readTime" style="font-family:var(--font-m);color:var(--green)"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.78rem">
+          <span style="color:var(--muted)">Category</span>
+          <span id="sidebarCat" style="font-family:var(--font-m);color:var(--green)"></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.78rem">
+          <span style="color:var(--muted)">Published</span>
+          <span id="sidebarDate" style="font-family:var(--font-m);color:var(--muted)"></span>
+        </div>
+      </div>
+      <div id="articleTags" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem"></div>
+    </div>
+
+    <!-- Table of contents -->
+    <div class="sidebar-widget" id="tocWidget" style="display:none">
+      <div class="sidebar-widget-title">In This Article</div>
+      <ul id="tocList" style="list-style:none;display:flex;flex-direction:column;gap:0.5rem"></ul>
+    </div>
+
+    <!-- Author -->
+    <div class="sidebar-widget" style="border:1px solid var(--rule);padding:1.2rem">
+      <div class="sidebar-widget-title">Written By</div>
+      <div style="display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:1rem">
+        <div style="width:48px;height:48px;border-radius:50%;background:var(--green);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:900;color:var(--paper);font-size:1.2rem">N</div>
+        <div>
+          <div style="font-family:var(--font-d);font-weight:700;font-size:0.9rem">Nyongesa Michael Owen</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem">Web &amp; Graphic Designer, Civil Engineering Graduate. Nairobi, Kenya.</div>
+        </div>
+      </div>
+      <a href="https://wa.me/254736566870?text=Hello%20Michael!%20I%20read%20your%20blog%20and%20would%20like%20to%20hire%20you." target="_blank" style="display:block;text-align:center;background:var(--ink);color:var(--paper);padding:0.6rem;font-family:var(--font-m);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:background var(--t)" onmouseover="this.style.background='var(--green)'" onmouseout="this.style.background='var(--ink)'">
+        Hire Me on WhatsApp &#x2192;
+      </a>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="sidebar-widget">
+      <div class="newsletter-box">
+        <div class="title">Enjoyed This Article?</div>
+        <div class="sub">Get weekly web dev tips straight to your inbox.</div>
+        <input class="newsletter-input" type="email" placeholder="your@email.com" id="nlEmail2"/>
+        <button class="newsletter-btn" onclick="subscribeNewsletter2()">Subscribe Free &#x2192;</button>
+        <p id="nlMsg2" style="font-size:0.72rem;color:var(--green);margin-top:0.5rem;display:none">&#x2713; Subscribed!</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- RELATED ARTICLES -->
+<div style="background:var(--paper2);padding:4rem 2rem;border-top:1px solid var(--rule)">
+  <div style="max-width:var(--max);margin:0 auto">
+    <div class="section-rule" style="margin:0 0 2rem">
+      <div class="section-rule-label">Related Articles</div>
+    </div>
+    <div class="articles-grid" id="relatedGrid">
+      <div class="article-card"><div class="article-card-img"><div class="skeleton" style="width:100%;height:100%"></div></div><div class="skeleton" style="height:1.2rem;width:90%;margin-bottom:0.5rem"></div><div class="skeleton" style="height:1rem;width:70%"></div></div>
+      <div class="article-card"><div class="article-card-img"><div class="skeleton" style="width:100%;height:100%"></div></div><div class="skeleton" style="height:1.2rem;width:90%;margin-bottom:0.5rem"></div><div class="skeleton" style="height:1rem;width:70%"></div></div>
+      <div class="article-card"><div class="article-card-img"><div class="skeleton" style="width:100%;height:100%"></div></div><div class="skeleton" style="height:1.2rem;width:90%;margin-bottom:0.5rem"></div><div class="skeleton" style="height:1rem;width:70%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Get<span>.</span>Techy<span>254</span></div>
+        <div class="footer-tagline">Web development &amp; digital business insights for Kenyan entrepreneurs.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Topics</div>
+        <ul class="footer-links">
+          <li><a href="blog.html?cat=web-dev">Web Development</a></li>
+          <li><a href="blog.html?cat=mpesa">M-Pesa Integration</a></li>
+          <li><a href="blog.html?cat=freelance">Freelancing</a></li>
+          <li><a href="blog.html?cat=tools">Tools &amp; Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#">Website Design</a></li>
+          <li><a href="#">M-Pesa Integration</a></li>
+          <li><a href="#">Graphic Design</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/254736566870" target="_blank">0736 566 870</a></li>
+          <li><a href="mailto:get.techy254@gmail.com">get.techy254@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Get.Techy254 &mdash; Nyongesa Michael Owen</span>
+      <span>Built with HTML &middot; Supabase &middot; Vercel</span>
+    </div>
+  </div>
+</footer>
+
+<script src="blog-script.js"></script>
+</body>
+</html>
