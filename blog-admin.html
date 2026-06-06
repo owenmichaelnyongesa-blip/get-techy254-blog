@@ -97,7 +97,7 @@
 
     /* WRITE EDITOR */
     #tabWrite{display:none}
-    .editor-layout{display:grid;grid-template-columns:1fr 320px;gap:2rem}
+    .editor-layout{display:grid;grid-template-columns:1fr 320px;gap:2rem;align-items:start}
     .editor-section{margin-bottom:1.5rem}
     .editor-label{font-family:var(--font-m);font-size:0.62rem;letter-spacing:2px;
       text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;display:block}
@@ -108,7 +108,7 @@
     .editor-title{font-family:var(--font-d);font-size:1.8rem;font-weight:700;
       font-style:italic;min-height:3rem;resize:none;overflow:hidden}
     textarea.editor-input{resize:vertical;min-height:80px;line-height:1.7}
-    #contentArea{min-height:400px;font-size:1rem;line-height:1.85;
+    #contentArea{height:420px;max-height:420px;overflow-y:auto;font-size:1rem;line-height:1.85;
       border:1.5px solid var(--rule);padding:1.5rem;background:var(--card);
       outline:none;font-family:var(--font-b);color:var(--ink)}
     #contentArea:focus{border-color:var(--green)}
@@ -128,6 +128,7 @@
     /* SIDEBAR PANELS */
     .editor-panel{background:var(--card);border:1px solid var(--rule);
       margin-bottom:1.2rem}
+    .editor-right{position:sticky;top:4rem;max-height:calc(100vh - 5rem);overflow-y:auto;padding-right:4px}
     .editor-panel-title{font-family:var(--font-m);font-size:0.62rem;
       letter-spacing:2px;text-transform:uppercase;color:var(--muted);
       padding:0.7rem 1rem;border-bottom:1px solid var(--rule);
@@ -232,7 +233,7 @@
     <div class="admin-logo">Get<span>.</span>Techy<span>254</span> <span style="font-size:0.75rem;font-style:normal;font-weight:400;color:rgba(250,247,242,0.35);letter-spacing:1px;margin-left:0.5rem">Blog Admin</span></div>
     <div class="admin-top-right">
       <span class="admin-email" id="adminEmail"></span>
-      <button class="btn-sm btn-view" onclick="window.open('blog.html','_blank')">&#x1F310; View Blog</button>
+      <button class="btn-sm btn-view" onclick="window.open('index.html','_blank')">&#x1F310; View Blog</button>
       <button class="btn-sm btn-new" onclick="newArticle()">+ New Article</button>
       <button class="btn-sm btn-logout" onclick="logout()">Sign Out</button>
     </div>
@@ -355,7 +356,7 @@ Tip: Write at least 800 words for good SEO."></div>
         </div>
 
         <!-- RIGHT: SETTINGS PANEL -->
-        <div>
+        <div class="editor-right">
 
           <!-- PUBLISH -->
           <div class="editor-panel">
