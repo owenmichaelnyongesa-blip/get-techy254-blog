@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="description" content="Get.Techy254 Blog — Web development, digital business and tech tips for Kenyan entrepreneurs and developers."/>
+  <title>Get.Techy254 Blog — Web Dev &amp; Digital Business in Kenya</title>
+  <link rel="stylesheet" href="blog-style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+</head>
+<body>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-bar" id="searchBar">
+  <input class="search-input" id="searchInput" type="text" placeholder="Search articles..."/>
+  <button class="search-close" id="searchClose">&#x2715;</button>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" aria-label="Back to top">&#x2191;</button>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" id="mobClose">&#x2715;</button>
+  <a href="blog.html">Home</a>
+  <a href="blog.html?cat=web-dev">Web Dev</a>
+  <a href="blog.html?cat=mpesa">M-Pesa</a>
+  <a href="blog.html?cat=freelance">Freelance</a>
+  <a href="blog.html?cat=tools">Tools</a>
+  <a href="blog.html?cat=business">Business</a>
+</div>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <span>Get.Techy254 &mdash; Web Dev &amp; Digital Business in Kenya</span>
+  <div class="strip-right">
+    <a href="https://wa.me/254736566870" target="_blank">WhatsApp</a>
+    <span class="strip-dot">&middot;</span>
+    <a href="mailto:get.techy254@gmail.com">Contact</a>
+    <span class="strip-dot">&middot;</span>
+    <a href="blog-admin.html">&#x270E; Write</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <ul class="nav-links-left">
+      <li><a href="blog.html?cat=web-dev">Web Dev</a></li>
+      <li><a href="blog.html?cat=mpesa">M-Pesa</a></li>
+      <li><a href="blog.html?cat=freelance">Freelance</a></li>
+    </ul>
+    <a href="blog.html" class="nav-logo">Get<span>.</span>Techy<span>254</span></a>
+    <ul class="nav-links-right">
+      <li><a href="blog.html?cat=tools">Tools</a></li>
+      <li><a href="blog.html?cat=business">Business</a></li>
+      <li><a href="#" id="searchBtn" title="Search">&#x2315;</a></li>
+    </ul>
+    <button class="hamburger" id="menuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- CATEGORY STRIP -->
+<div class="cat-strip">
+  <div class="cat-strip-inner">
+    <button class="cat-btn active" data-cat="all">All Articles</button>
+    <button class="cat-btn" data-cat="web-dev">Web Development</button>
+    <button class="cat-btn" data-cat="mpesa">M-Pesa Integration</button>
+    <button class="cat-btn" data-cat="freelance">Freelancing in Kenya</button>
+    <button class="cat-btn" data-cat="tools">Tools &amp; Resources</button>
+    <button class="cat-btn" data-cat="business">Digital Business</button>
+    <button class="cat-btn" data-cat="supabase">Supabase</button>
+    <button class="cat-btn" data-cat="tutorials">Tutorials</button>
+  </div>
+</div>
+
+<!-- HOMEPAGE HERO -->
+<div id="home-hero">
+
+  <!-- FEATURED ARTICLE -->
+  <div class="featured-grid reveal" id="featuredArticle">
+    <!-- Skeleton while loading -->
+    <div class="featured-image-wrap">
+      <div class="skeleton" style="width:100%;height:100%;min-height:350px"></div>
+    </div>
+    <div class="featured-content">
+      <div>
+        <div class="featured-label">Loading...</div>
+        <div class="skeleton" style="height:2.5rem;margin-bottom:1rem;width:90%"></div>
+        <div class="skeleton" style="height:1rem;margin-bottom:0.5rem;width:100%"></div>
+        <div class="skeleton" style="height:1rem;margin-bottom:0.5rem;width:85%"></div>
+        <div class="skeleton" style="height:1rem;width:70%"></div>
+      </div>
+      <div class="skeleton" style="height:0.8rem;margin-top:2rem;width:50%"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SECTION DIVIDER -->
+<div class="section-rule" style="margin-top:3rem">
+  <div class="section-rule-label">Latest Articles</div>
+</div>
+
+<!-- ARTICLES GRID + SIDEBAR -->
+<div class="main-with-sidebar">
+  <div>
+    <div class="articles-grid" id="articlesGrid">
+      <!-- Skeleton cards -->
+      <div class="article-card">
+        <div class="article-card-img"><div class="skeleton" style="width:100%;height:100%"></div></div>
+        <div class="skeleton" style="height:0.8rem;width:40%;margin-bottom:0.5rem"></div>
+        <div class="skeleton" style="height:1.2rem;width:100%;margin-bottom:0.3rem"></div>
+        <div class="skeleton" style="height:1.2rem;width:80%;margin-bottom:1rem"></div>
+        <div class="skeleton" style="height:0.8rem;width:60%"></div>
+      </div>
+      <div class="article-card">
+        <div class="article-card-img"><div class="skeleton" style="width:100%;height:100%"></div></div>
+        <div class="skeleton" style="height:0.8rem;width:40%;margin-bottom:0.5rem"></div>
+        <div class="skeleton" style="height:1.2rem;width:100%;margin-bottom:0.3rem"></div>
+        <div class="skeleton" style="height:1.2rem;width:80%;margin-bottom:1rem"></div>
+        <div class="skeleton" style="height:0.8rem;width:60%"></div>
+      </div>
+      <div class="article-card">
+        <div class="article-card-img"><div class="skeleton" style="width:100%;height:100%"></div></div>
+        <div class="skeleton" style="height:0.8rem;width:40%;margin-bottom:0.5rem"></div>
+        <div class="skeleton" style="height:1.2rem;width:100%;margin-bottom:0.3rem"></div>
+        <div class="skeleton" style="height:1.2rem;width:80%;margin-bottom:1rem"></div>
+        <div class="skeleton" style="height:0.8rem;width:60%"></div>
+      </div>
+    </div>
+
+    <!-- Load More -->
+    <div style="text-align:center;margin-top:3rem">
+      <button id="loadMoreBtn" class="share-btn" style="padding:0.8rem 2rem;font-size:0.7rem">
+        Load More Articles &#x2193;
+      </button>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Newsletter -->
+    <div class="sidebar-widget">
+      <div class="newsletter-box">
+        <div class="title">Get Articles in Your Inbox</div>
+        <div class="sub">Weekly web dev &amp; digital business tips for Kenyan entrepreneurs.</div>
+        <input class="newsletter-input" type="email" placeholder="your@email.com" id="nlEmail"/>
+        <button class="newsletter-btn" onclick="subscribeNewsletter()">Subscribe Free &#x2192;</button>
+        <p id="nlMsg" style="font-size:0.72rem;color:var(--green);margin-top:0.5rem;display:none">&#x2713; Subscribed!</p>
+      </div>
+    </div>
+
+    <!-- Popular Posts -->
+    <div class="sidebar-widget">
+      <div class="sidebar-widget-title">Popular This Week</div>
+      <div id="popularPosts">
+        <div class="sidebar-post">
+          <div class="skeleton" style="width:70px;height:52px;flex-shrink:0"></div>
+          <div style="flex:1"><div class="skeleton" style="height:0.85rem;width:100%;margin-bottom:0.3rem"></div><div class="skeleton" style="height:0.85rem;width:80%"></div></div>
+        </div>
+        <div class="sidebar-post">
+          <div class="skeleton" style="width:70px;height:52px;flex-shrink:0"></div>
+          <div style="flex:1"><div class="skeleton" style="height:0.85rem;width:100%;margin-bottom:0.3rem"></div><div class="skeleton" style="height:0.85rem;width:80%"></div></div>
+        </div>
+        <div class="sidebar-post">
+          <div class="skeleton" style="width:70px;height:52px;flex-shrink:0"></div>
+          <div style="flex:1"><div class="skeleton" style="height:0.85rem;width:100%;margin-bottom:0.3rem"></div><div class="skeleton" style="height:0.85rem;width:80%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="sidebar-widget">
+      <div class="sidebar-widget-title">Browse By Tag</div>
+      <div class="tag-cloud" id="tagCloud">
+        <span class="tag-pill" data-tag="mpesa">M-Pesa</span>
+        <span class="tag-pill" data-tag="supabase">Supabase</span>
+        <span class="tag-pill" data-tag="vercel">Vercel</span>
+        <span class="tag-pill" data-tag="html">HTML/CSS</span>
+        <span class="tag-pill" data-tag="javascript">JavaScript</span>
+        <span class="tag-pill" data-tag="paystack">Paystack</span>
+        <span class="tag-pill" data-tag="freelance">Freelance</span>
+        <span class="tag-pill" data-tag="clients">Clients</span>
+        <span class="tag-pill" data-tag="nairobi">Nairobi</span>
+        <span class="tag-pill" data-tag="github">GitHub</span>
+        <span class="tag-pill" data-tag="ecommerce">E-Commerce</span>
+        <span class="tag-pill" data-tag="seo">SEO</span>
+      </div>
+    </div>
+
+    <!-- About Widget -->
+    <div class="sidebar-widget">
+      <div class="sidebar-widget-title">About The Author</div>
+      <div style="display:flex;gap:0.8rem;align-items:flex-start">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--green);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:900;color:var(--paper);font-size:1.2rem">N</div>
+        <div>
+          <div style="font-family:var(--font-d);font-weight:700;font-size:0.95rem;margin-bottom:0.2rem">Nyongesa Michael Owen</div>
+          <div style="font-size:0.75rem;color:var(--muted);line-height:1.5">Graphic &amp; Web Designer, Civil Engineering Graduate. Building digital products for Kenyan businesses.</div>
+          <a href="https://wa.me/254736566870" target="_blank" style="display:inline-block;margin-top:0.6rem;font-family:var(--font-m);font-size:0.62rem;letter-spacing:1px;text-transform:uppercase;color:var(--green);border-bottom:1px solid var(--green-m)">Hire Me &#x2192;</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Get<span>.</span>Techy<span>254</span></div>
+        <div class="footer-tagline">Web development, digital business and tech tips for Kenyan entrepreneurs and developers. Written from Nairobi.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Topics</div>
+        <ul class="footer-links">
+          <li><a href="blog.html?cat=web-dev">Web Development</a></li>
+          <li><a href="blog.html?cat=mpesa">M-Pesa Integration</a></li>
+          <li><a href="blog.html?cat=freelance">Freelancing</a></li>
+          <li><a href="blog.html?cat=tools">Tools &amp; Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="#">Website Design</a></li>
+          <li><a href="#">M-Pesa Integration</a></li>
+          <li><a href="#">Graphic Design</a></li>
+          <li><a href="#">Website Templates</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="https://wa.me/254736566870" target="_blank">WhatsApp: 0736 566 870</a></li>
+          <li><a href="mailto:get.techy254@gmail.com">get.techy254@gmail.com</a></li>
+          <li><a href="#">Nairobi, Kenya</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Get.Techy254 &mdash; Nyongesa Michael Owen. All rights reserved.</span>
+      <span>Built with HTML &middot; Supabase &middot; Deployed on Vercel</span>
+    </div>
+  </div>
+</footer>
+
+<script src="blog-script.js"></script>
+</body>
+</html>
