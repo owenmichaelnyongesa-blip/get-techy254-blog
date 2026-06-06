@@ -4,7 +4,7 @@
    Fonts: Fraunces (display) + Lora (body) + Fira Code (mono)
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,600;1,9..144,900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fira+Code:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,900&family=Lora:wght@400;500&family=Fira+Code:wght@400&display=swap&font-display=swap');
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;font-size:16px}
@@ -179,11 +179,11 @@ nav{
   position:relative;overflow:hidden;
   aspect-ratio:4/3;
 }
-.featured-image-wrap img{
+.featured-image-wrap img{will-change:transform;
   width:100%;height:100%;object-fit:cover;
   transition:transform 0.6s ease;display:block;
 }
-.featured-grid:hover .featured-image-wrap img{transform:scale(1.03)}
+.featured-grid:hover .featured-image-wrap img{will-change:transform;transform:scale(1.03)}
 .featured-cat-badge{
   position:absolute;top:1.2rem;left:1.2rem;
   background:var(--green);color:var(--paper);
@@ -582,7 +582,7 @@ footer{
 /* ── LOADING SKELETON ───────────────────────────────── */
 .skeleton{
   background:linear-gradient(90deg,var(--paper3) 25%,var(--paper2) 50%,var(--paper3) 75%);
-  background-size:200% 100%;animation:shimmer 1.5s infinite;
+  background-size:200% 100%;animation:shimmer 1.5s infinite;contain:strict;
   border-radius:2px;
 }
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
@@ -630,7 +630,7 @@ footer{
   .footer-top{grid-template-columns:1fr 1fr;gap:2rem}
 }
 @media(max-width:768px){
-  .nav-inner{grid-template-columns:auto 1fr auto}
+  .nav-inner{grid-template-columns:auto 1fr auto;gap:0.5rem}
   .nav-links-left,.nav-links-right{display:none}
   .hamburger{display:flex}
   .nav-logo{text-align:left;font-size:1.3rem}
@@ -646,4 +646,28 @@ footer{
 @media(max-width:500px){
   .articles-grid{grid-template-columns:1fr}
   .footer-top{grid-template-columns:1fr}
+  .featured-grid{grid-template-columns:1fr}
+  .featured-title{font-size:1.4rem}
+  .cat-strip{padding:0 0.5rem}
+  #home-hero{padding:1rem 0.8rem 0}
+  .articles-section{padding:0 0.8rem 3rem}
+  .section-rule{padding:0 0.8rem}
 }
+
+/* ── MOBILE TOUCH IMPROVEMENTS ─────────────────────────── */
+@media(max-width:768px){
+  .cat-strip-inner{-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .cat-strip-inner::-webkit-scrollbar{display:none}
+  .main-with-sidebar{padding:0 1rem 3rem}
+  .article-hero{padding:1.5rem 1rem 0}
+  .article-body-wrap{padding:2rem 1rem}
+  .articles-grid{gap:1.2rem}
+  nav{padding:0.8rem 1rem}
+  .featured-content{padding:1.5rem}
+  footer{padding:3rem 1rem 2rem}
+  section{padding:3rem 1rem}
+}
+
+/* ── PERFORMANCE ────────────────────────────────────────── */
+img{content-visibility:auto}
+.reveal{content-visibility:auto}
