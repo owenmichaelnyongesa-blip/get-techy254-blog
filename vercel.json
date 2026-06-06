@@ -1,16 +1,35 @@
 {
+  "rewrites": [
+    { "source": "/blog", "destination": "/index.html" },
+    { "source": "/blog/:path*", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*\\.html)",
-      "headers": [{ "key": "Content-Type", "value": "text/html; charset=utf-8" }]
-    },
-    {
-      "source": "/(.*\\.js)",
-      "headers": [{ "key": "Content-Type", "value": "application/javascript; charset=utf-8" }]
+      "headers": [
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
     },
     {
       "source": "/(.*\\.css)",
-      "headers": [{ "key": "Content-Type", "value": "text/css; charset=utf-8" }]
+      "headers": [
+        { "key": "Content-Type", "value": "text/css; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/(.*\\.js)",
+      "headers": [
+        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(png|jpg|jpeg|gif|ico|svg|webp)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+      ]
     }
   ],
   "crons": [
