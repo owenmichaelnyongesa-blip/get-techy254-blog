@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Blog Admin — Get.Techy254</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,900&family=Lora:wght@400;500&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#1A1208;--ink2:#2D2416;
+      --paper:#FAF7F2;--paper2:#F3EDE3;--paper3:#EDE5D8;
+      --green:#1A5C3A;--green2:#0F3D25;--green-l:rgba(26,92,58,0.08);
+      --amber:#C4720A;--amber-l:rgba(196,114,10,0.1);
+      --red:#B03A2E;--red-l:rgba(176,58,46,0.1);
+      --rule:rgba(26,18,8,0.12);--muted:#7A6E5F;
+      --card:#FFFEF9;
+      --font-d:'Fraunces',Georgia,serif;
+      --font-b:'Lora',Georgia,serif;
+      --font-m:'Fira Code','Courier New',monospace;
+      --t:0.3s ease;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-b);background:var(--paper);color:var(--ink);min-height:100vh}
+
+    /* LOGIN */
+    #loginPage{display:flex;align-items:center;justify-content:center;
+      min-height:100vh;padding:2rem;background:var(--ink)}
+    .login-card{background:var(--paper);padding:3rem;width:100%;max-width:420px}
+    .login-logo{font-family:var(--font-d);font-size:2rem;font-weight:900;
+      font-style:italic;margin-bottom:0.3rem}
+    .login-logo span{color:var(--green)}
+    .login-sub{color:var(--muted);font-size:0.82rem;margin-bottom:2rem;
+      font-family:var(--font-m);letter-spacing:0.5px}
+    .form-group{margin-bottom:1.2rem}
+    .form-label{display:block;font-family:var(--font-m);font-size:0.65rem;
+      letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+    .form-input{width:100%;background:var(--paper2);border:1.5px solid var(--rule);
+      padding:0.85rem 1rem;font-family:var(--font-b);font-size:0.95rem;
+      color:var(--ink);outline:none;transition:border-color var(--t)}
+    .form-input:focus{border-color:var(--green)}
+    .btn-login{width:100%;background:var(--ink);color:var(--paper);border:none;
+      padding:0.9rem;font-family:var(--font-m);font-size:0.72rem;
+      letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+      transition:background var(--t)}
+    .btn-login:hover{background:var(--green)}
+    .login-error{color:var(--red);font-size:0.78rem;margin-top:0.8rem;
+      display:none;font-family:var(--font-m)}
+
+    /* DASHBOARD LAYOUT */
+    #dashboard{display:none;min-height:100vh}
+    .admin-top{background:var(--ink);color:var(--paper);
+      padding:0.8rem 2rem;display:flex;align-items:center;
+      justify-content:space-between;gap:1rem;flex-wrap:wrap;
+      border-bottom:2px solid var(--green)}
+    .admin-logo{font-family:var(--font-d);font-size:1.3rem;font-weight:900;
+      font-style:italic;color:var(--paper)}
+    .admin-logo span{color:var(--green)}
+    .admin-top-right{display:flex;align-items:center;gap:1rem}
+    .admin-email{font-family:var(--font-m);font-size:0.65rem;
+      color:rgba(250,247,242,0.45)}
+    .btn-sm{font-family:var(--font-m);font-size:0.65rem;letter-spacing:1.5px;
+      text-transform:uppercase;padding:0.4rem 1rem;border:none;
+      cursor:pointer;transition:all var(--t)}
+    .btn-logout{background:rgba(250,247,242,0.08);color:rgba(250,247,242,0.55)}
+    .btn-logout:hover{background:rgba(176,58,46,0.3);color:var(--paper)}
+    .btn-new{background:var(--green);color:var(--paper)}
+    .btn-new:hover{background:var(--green2)}
+    .btn-view{background:transparent;color:rgba(250,247,242,0.55);
+      border:1px solid rgba(250,247,242,0.15)}
+    .btn-view:hover{border-color:var(--green);color:var(--green)}
+
+    /* TABS */
+    .admin-tabs{background:var(--paper2);border-bottom:1px solid var(--rule);
+      display:flex;gap:0;overflow-x:auto}
+    .tab-btn{font-family:var(--font-m);font-size:0.65rem;letter-spacing:2px;
+      text-transform:uppercase;padding:0.8rem 1.5rem;border:none;
+      background:transparent;color:var(--muted);cursor:pointer;
+      border-bottom:2px solid transparent;margin-bottom:-1px;
+      transition:all var(--t);white-space:nowrap}
+    .tab-btn:hover{color:var(--ink)}
+    .tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+
+    /* STATS ROW */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+      background:var(--rule);border-bottom:1px solid var(--rule)}
+    .stat-box{background:var(--paper);padding:1.2rem 1.5rem;text-align:center}
+    .stat-box-num{font-family:var(--font-d);font-size:1.8rem;font-weight:900;
+      color:var(--green);font-style:italic}
+    .stat-box-label{font-family:var(--font-m);font-size:0.62rem;
+      letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;margin-top:0.2rem}
+
+    /* MAIN CONTENT AREA */
+    .admin-main{max-width:1200px;margin:0 auto;padding:2rem}
+
+    /* WRITE EDITOR */
+    #tabWrite{display:none}
+    .editor-layout{display:grid;grid-template-columns:1fr 320px;gap:2rem}
+    .editor-section{margin-bottom:1.5rem}
+    .editor-label{font-family:var(--font-m);font-size:0.62rem;letter-spacing:2px;
+      text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;display:block}
+    .editor-input{width:100%;background:var(--card);border:1.5px solid var(--rule);
+      padding:0.8rem 1rem;font-family:var(--font-b);font-size:0.95rem;
+      color:var(--ink);outline:none;transition:border-color var(--t)}
+    .editor-input:focus{border-color:var(--green)}
+    .editor-title{font-family:var(--font-d);font-size:1.8rem;font-weight:700;
+      font-style:italic;min-height:3rem;resize:none;overflow:hidden}
+    textarea.editor-input{resize:vertical;min-height:80px;line-height:1.7}
+    #contentArea{min-height:400px;font-size:1rem;line-height:1.85;
+      border:1.5px solid var(--rule);padding:1.5rem;background:var(--card);
+      outline:none;font-family:var(--font-b);color:var(--ink)}
+    #contentArea:focus{border-color:var(--green)}
+    #contentArea[contenteditable]:empty:before{
+      content:attr(data-placeholder);color:var(--muted);font-style:italic;pointer-events:none}
+
+    /* TOOLBAR */
+    .toolbar{display:flex;gap:0.3rem;flex-wrap:wrap;
+      background:var(--paper2);border:1.5px solid var(--rule);
+      border-bottom:none;padding:0.5rem}
+    .tool-btn{background:transparent;border:none;padding:0.3rem 0.6rem;
+      cursor:pointer;font-size:0.85rem;color:var(--muted);
+      border-radius:2px;transition:all var(--t);font-family:var(--font-m)}
+    .tool-btn:hover{background:var(--green);color:var(--paper)}
+    .tool-divider{width:1px;background:var(--rule);margin:0.2rem 0.3rem;align-self:stretch}
+
+    /* SIDEBAR PANELS */
+    .editor-panel{background:var(--card);border:1px solid var(--rule);
+      margin-bottom:1.2rem}
+    .editor-panel-title{font-family:var(--font-m);font-size:0.62rem;
+      letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+      padding:0.7rem 1rem;border-bottom:1px solid var(--rule);
+      background:var(--paper2)}
+    .editor-panel-body{padding:1rem}
+    select.editor-input{cursor:pointer}
+    .publish-btn{width:100%;background:var(--ink);color:var(--paper);
+      border:none;padding:0.9rem;font-family:var(--font-m);
+      font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
+      cursor:pointer;transition:background var(--t);margin-bottom:0.6rem}
+    .publish-btn:hover{background:var(--green)}
+    .draft-btn{width:100%;background:transparent;color:var(--muted);
+      border:1px solid var(--rule);padding:0.7rem;font-family:var(--font-m);
+      font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;
+      cursor:pointer;transition:all var(--t)}
+    .draft-btn:hover{border-color:var(--ink);color:var(--ink)}
+
+    /* IMAGE UPLOAD ZONE */
+    .upload-zone{border:2px dashed var(--rule);padding:1.5rem;
+      text-align:center;cursor:pointer;transition:all var(--t);
+      background:var(--paper2)}
+    .upload-zone:hover{border-color:var(--green);background:var(--green-l)}
+    .upload-zone-icon{font-size:2rem;margin-bottom:0.5rem}
+    .upload-zone-text{font-family:var(--font-m);font-size:0.65rem;
+      letter-spacing:1px;color:var(--muted)}
+    .upload-preview{width:100%;aspect-ratio:16/9;object-fit:cover;
+      display:block;border:1px solid var(--rule)}
+    .url-input-wrap{margin-top:0.6rem}
+    .or-divider{text-align:center;font-family:var(--font-m);
+      font-size:0.62rem;color:var(--muted);margin:0.5rem 0}
+
+    /* ARTICLES LIST */
+    #tabArticles{display:none}
+    .articles-table{width:100%;border-collapse:collapse}
+    .articles-table th{font-family:var(--font-m);font-size:0.62rem;
+      letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+      padding:0.7rem 1rem;text-align:left;border-bottom:2px solid var(--ink);
+      background:var(--paper2)}
+    .articles-table td{padding:0.9rem 1rem;border-bottom:1px solid var(--rule);
+      font-size:0.88rem;vertical-align:middle}
+    .articles-table tr:hover td{background:var(--paper2)}
+    .status-badge{font-family:var(--font-m);font-size:0.62rem;
+      letter-spacing:1px;padding:0.2rem 0.6rem;display:inline-block}
+    .status-published{background:var(--green-l);color:var(--green)}
+    .status-draft{background:var(--amber-l);color:var(--amber)}
+    .action-btn{font-family:var(--font-m);font-size:0.6rem;letter-spacing:1px;
+      text-transform:uppercase;padding:0.3rem 0.7rem;border:1px solid var(--rule);
+      background:transparent;cursor:pointer;color:var(--muted);
+      transition:all var(--t);margin-right:0.3rem}
+    .action-btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+    .action-btn.delete:hover{background:var(--red);border-color:var(--red)}
+
+    /* TOAST */
+    #toast{position:fixed;bottom:2rem;left:50%;
+      transform:translateX(-50%) translateY(80px);
+      background:var(--ink);color:var(--paper);
+      font-family:var(--font-m);font-size:0.72rem;letter-spacing:1px;
+      padding:0.8rem 2rem;opacity:0;transition:all 0.4s ease;z-index:999}
+    #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+    #toast.success{background:var(--green)}
+    #toast.error{background:var(--red)}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      .editor-layout{grid-template-columns:1fr}
+      .stats-row{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:600px){
+      .stats-row{grid-template-columns:1fr 1fr}
+      .admin-main{padding:1rem}
+    }
+  </style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<!-- LOGIN -->
+<div id="loginPage">
+  <div class="login-card">
+    <div class="login-logo">Get<span>.</span>Techy<span>254</span></div>
+    <div class="login-sub">// Blog Admin Panel</div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" id="loginEmail" class="form-input" placeholder="your@email.com"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" id="loginPassword" class="form-input" placeholder="&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;"
+             onkeydown="if(event.key==='Enter')login()"/>
+    </div>
+    <button class="btn-login" onclick="login()">Sign In &#x2192;</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <!-- TOP BAR -->
+  <div class="admin-top">
+    <div class="admin-logo">Get<span>.</span>Techy<span>254</span> <span style="font-size:0.75rem;font-style:normal;font-weight:400;color:rgba(250,247,242,0.35);letter-spacing:1px;margin-left:0.5rem">Blog Admin</span></div>
+    <div class="admin-top-right">
+      <span class="admin-email" id="adminEmail"></span>
+      <button class="btn-sm btn-view" onclick="window.open('blog.html','_blank')">&#x1F310; View Blog</button>
+      <button class="btn-sm btn-new" onclick="newArticle()">+ New Article</button>
+      <button class="btn-sm btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="admin-tabs">
+    <button class="tab-btn active" id="tabBtnDash" onclick="switchTab('dash')">&#x1F4CA; Overview</button>
+    <button class="tab-btn" id="tabBtnArticles" onclick="switchTab('articles')">&#x1F4C4; All Articles</button>
+    <button class="tab-btn" id="tabBtnWrite" onclick="switchTab('write')">&#x270E; Write Article</button>
+    <button class="tab-btn" id="tabBtnSubs" onclick="switchTab('subs')">&#x1F4EC; Subscribers</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tabDash">
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-box-num" id="statTotal">—</div><div class="stat-box-label">Total Articles</div></div>
+      <div class="stat-box"><div class="stat-box-num" id="statPub">—</div><div class="stat-box-label">Published</div></div>
+      <div class="stat-box"><div class="stat-box-num" id="statDraft">—</div><div class="stat-box-label">Drafts</div></div>
+      <div class="stat-box"><div class="stat-box-num" id="statSubs">—</div><div class="stat-box-label">Subscribers</div></div>
+    </div>
+    <div class="admin-main">
+      <p style="font-family:var(--font-m);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem">Recent Articles</p>
+      <table class="articles-table" id="dashRecentTable">
+        <thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Published</th><th>Views</th><th>Actions</th></tr></thead>
+        <tbody id="dashRecentBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ARTICLES TAB -->
+  <div id="tabArticles" style="display:none">
+    <div class="admin-main">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+        <p style="font-family:var(--font-m);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">All Articles</p>
+        <div style="display:flex;gap:0.5rem">
+          <select id="filterStatus" class="editor-input" style="width:auto;padding:0.4rem 0.8rem;font-size:0.8rem" onchange="loadArticlesAdmin()">
+            <option value="all">All Status</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+          </select>
+          <select id="filterCat" class="editor-input" style="width:auto;padding:0.4rem 0.8rem;font-size:0.8rem" onchange="loadArticlesAdmin()">
+            <option value="all">All Categories</option>
+            <option value="web-dev">Web Development</option>
+            <option value="mpesa">M-Pesa Integration</option>
+            <option value="freelance">Freelancing</option>
+            <option value="tools">Tools &amp; Resources</option>
+            <option value="business">Digital Business</option>
+            <option value="supabase">Supabase</option>
+            <option value="tutorials">Tutorials</option>
+          </select>
+        </div>
+      </div>
+      <table class="articles-table">
+        <thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Published</th><th>Views</th><th>Actions</th></tr></thead>
+        <tbody id="articlesBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WRITE / EDIT TAB -->
+  <div id="tabWrite" style="display:none">
+    <div class="admin-main">
+      <input type="hidden" id="editingId"/>
+      <div class="editor-layout">
+
+        <!-- LEFT: EDITOR -->
+        <div>
+          <!-- Title -->
+          <div class="editor-section">
+            <label class="editor-label">Article Title</label>
+            <textarea id="articleTitle" class="editor-input editor-title" rows="2"
+              placeholder="Write your headline here..."
+              oninput="autoSlug();this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+          </div>
+
+          <!-- Excerpt -->
+          <div class="editor-section">
+            <label class="editor-label">Excerpt / Standfirst <span style="color:var(--muted);font-size:0.6rem">(shown on article cards)</span></label>
+            <textarea id="articleExcerpt" class="editor-input" rows="3"
+              placeholder="One or two sentences summarising the article..."></textarea>
+          </div>
+
+          <!-- TOOLBAR -->
+          <div class="editor-section">
+            <label class="editor-label">Article Content</label>
+            <div class="toolbar">
+              <button class="tool-btn" onclick="fmt('bold')" title="Bold"><strong>B</strong></button>
+              <button class="tool-btn" onclick="fmt('italic')" title="Italic"><em>I</em></button>
+              <button class="tool-btn" onclick="fmt('underline')" title="Underline"><u>U</u></button>
+              <div class="tool-divider"></div>
+              <button class="tool-btn" onclick="insertHeading(2)" title="Heading 2">H2</button>
+              <button class="tool-btn" onclick="insertHeading(3)" title="Heading 3">H3</button>
+              <div class="tool-divider"></div>
+              <button class="tool-btn" onclick="fmt('insertUnorderedList')" title="Bullet list">&#x2022; List</button>
+              <button class="tool-btn" onclick="fmt('insertOrderedList')" title="Numbered list">1. List</button>
+              <div class="tool-divider"></div>
+              <button class="tool-btn" onclick="insertBlockquote()" title="Blockquote">&#x275D;</button>
+              <button class="tool-btn" onclick="insertCode()" title="Code block">&lt;/&gt;</button>
+              <button class="tool-btn" onclick="insertInfoBox()" title="Info box">&#x2139;</button>
+              <button class="tool-btn" onclick="insertPullQuote()" title="Pull quote">&#x201C;&#x201D;</button>
+              <div class="tool-divider"></div>
+              <button class="tool-btn" onclick="insertImageInContent()" title="Insert image">&#x1F5BC;</button>
+              <button class="tool-btn" onclick="insertYouTube()" title="Embed YouTube">&#x25B6;</button>
+              <button class="tool-btn" onclick="insertLink()" title="Insert link">&#x1F517;</button>
+              <div class="tool-divider"></div>
+              <button class="tool-btn" onclick="fmt('removeFormat')" title="Clear formatting">&#x2715;</button>
+            </div>
+            <div id="contentArea" contenteditable="true"
+              data-placeholder="Start writing your article here...
+
+Use the toolbar above to:
+• Bold, italic, headings
+• Add bullet lists
+• Insert images and YouTube videos
+• Add code blocks and blockquotes
+
+Tip: Write at least 800 words for good SEO."></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: SETTINGS PANEL -->
+        <div>
+
+          <!-- PUBLISH -->
+          <div class="editor-panel">
+            <div class="editor-panel-title">Publish</div>
+            <div class="editor-panel-body">
+              <div style="margin-bottom:1rem">
+                <label class="editor-label">Status</label>
+                <select id="articleStatus" class="editor-input">
+                  <option value="published">Published</option>
+                  <option value="draft">Draft</option>
+                </select>
+              </div>
+              <div style="margin-bottom:1rem">
+                <label class="editor-label">Publish Date</label>
+                <input type="datetime-local" id="articleDate" class="editor-input"/>
+              </div>
+              <button class="publish-btn" onclick="saveArticle('published')">Publish Article &#x2192;</button>
+              <button class="draft-btn" onclick="saveArticle('draft')">Save as Draft</button>
+            </div>
+          </div>
+
+          <!-- COVER IMAGE -->
+          <div class="editor-panel">
+            <div class="editor-panel-title">Cover Image</div>
+            <div class="editor-panel-body">
+              <!-- Upload from device -->
+              <div class="upload-zone" id="coverUploadZone"
+                onclick="document.getElementById('coverFileInput').click()"
+                ondragover="event.preventDefault();this.style.borderColor='var(--green)'"
+                ondragleave="this.style.borderColor=''"
+                ondrop="event.preventDefault();handleCoverDrop(event)">
+                <div id="coverPreviewWrap">
+                  <div class="upload-zone-icon">&#x1F4F7;</div>
+                  <div class="upload-zone-text">Click to upload cover image<br/>or drag &amp; drop<br/>JPG, PNG, WEBP &middot; Max 5MB</div>
+                </div>
+              </div>
+              <input type="file" id="coverFileInput" accept="image/jpeg,image/png,image/webp" style="display:none"
+                onchange="handleCoverFile(this.files[0])"/>
+              <div class="or-divider">— or paste URL —</div>
+              <input type="text" id="coverImageUrl" class="editor-input" placeholder="https://..."
+                oninput="previewCoverUrl(this.value)"/>
+              <div id="coverClearBtn" style="display:none;margin-top:0.5rem">
+                <button onclick="clearCover()" style="font-family:var(--font-m);font-size:0.62rem;letter-spacing:1px;background:none;border:none;color:var(--red);cursor:pointer;text-transform:uppercase">&#x2715; Remove Image</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIDEO -->
+          <div class="editor-panel">
+            <div class="editor-panel-title">Video (Optional)</div>
+            <div class="editor-panel-body">
+              <div style="margin-bottom:0.8rem">
+                <label class="editor-label">YouTube URL or Video File URL</label>
+                <input type="text" id="videoUrl" class="editor-input"
+                  placeholder="https://youtube.com/watch?v=... or video.mp4"/>
+              </div>
+              <div style="margin-bottom:0.8rem">
+                <label class="editor-label">Video Caption</label>
+                <input type="text" id="videoCaption" class="editor-input" placeholder="Optional caption..."/>
+              </div>
+              <div>
+                <label class="editor-label">Video Position</label>
+                <select id="videoPosition" class="editor-input">
+                  <option value="top">Top of article (before content)</option>
+                  <option value="bottom">Bottom of article (after content)</option>
+                  <option value="inline">Inline (I'll place it manually in content)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- META -->
+          <div class="editor-panel">
+            <div class="editor-panel-title">Article Settings</div>
+            <div class="editor-panel-body">
+              <div style="margin-bottom:0.8rem">
+                <label class="editor-label">Category</label>
+                <select id="articleCategory" class="editor-input">
+                  <option value="web-dev">Web Development</option>
+                  <option value="mpesa">M-Pesa Integration</option>
+                  <option value="freelance">Freelancing in Kenya</option>
+                  <option value="tools">Tools &amp; Resources</option>
+                  <option value="business">Digital Business</option>
+                  <option value="supabase">Supabase</option>
+                  <option value="tutorials">Tutorials</option>
+                </select>
+              </div>
+              <div style="margin-bottom:0.8rem">
+                <label class="editor-label">Tags <span style="color:var(--muted);font-size:0.58rem">(comma separated)</span></label>
+                <input type="text" id="articleTags" class="editor-input"
+                  placeholder="mpesa, supabase, vercel"/>
+              </div>
+              <div>
+                <label class="editor-label">URL Slug <span style="color:var(--muted);font-size:0.58rem">(auto-generated)</span></label>
+                <input type="text" id="articleSlug" class="editor-input"
+                  placeholder="how-to-add-mpesa-to-website"/>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBSCRIBERS TAB -->
+  <div id="tabSubs" style="display:none">
+    <div class="admin-main">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+        <p style="font-family:var(--font-m);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Newsletter Subscribers</p>
+        <button class="btn-sm btn-new" onclick="exportSubscribers()">Export CSV &#x2193;</button>
+      </div>
+      <table class="articles-table">
+        <thead><tr><th>Email</th><th>Subscribed On</th></tr></thead>
+        <tbody id="subsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────
+let currentUser = null;
+let editingId   = null;
+let coverUploaded = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (session) { currentUser = session.user; showDashboard(); }
+  // Set default publish date to now
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  const el = document.getElementById('articleDate');
+  if (el) el.value = now.toISOString().slice(0,16);
+});
+
+async function login() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  if (!email || !pass) { errEl.textContent = 'Enter email and password.'; errEl.style.display='block'; return; }
+  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
+  if (error) { errEl.textContent = 'Invalid credentials.'; errEl.style.display='block'; }
+  else { currentUser = data.user; errEl.style.display='none'; showDashboard(); }
+}
+
+async function logout() {
+  await supabaseClient.auth.signOut();
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+}
+
+function showDashboard() {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('adminEmail').textContent = currentUser?.email || '';
+  loadStats();
+  loadRecentArticles();
+}
+
+// ── TABS ──────────────────────────────────────────────────
+function switchTab(tab) {
+  ['dash','articles','write','subs'].forEach(t => {
+    document.getElementById('tab'+capitalize(t)).style.display = t === tab ? 'block' : 'none';
+    document.getElementById('tabBtn'+capitalize(t)).classList.toggle('active', t === tab);
+  });
+  if (tab === 'articles') loadArticlesAdmin();
+  if (tab === 'subs') loadSubscribers();
+}
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function newArticle() {
+  editingId = null; coverUploaded = null;
+  document.getElementById('editingId').value = '';
+  document.getElementById('articleTitle').value = '';
+  document.getElementById('articleExcerpt').value = '';
+  document.getElementById('articleSlug').value = '';
+  document.getElementById('articleTags').value = '';
+  document.getElementById('coverImageUrl').value = '';
+  document.getElementById('videoUrl').value = '';
+  document.getElementById('videoCaption').value = '';
+  document.getElementById('contentArea').innerHTML = '';
+  document.getElementById('articleStatus').value = 'published';
+  document.getElementById('coverPreviewWrap').innerHTML = `
+    <div class="upload-zone-icon">&#x1F4F7;</div>
+    <div class="upload-zone-text">Click to upload cover image<br/>or drag &amp; drop</div>`;
+  document.getElementById('coverClearBtn').style.display = 'none';
+  switchTab('write');
+}
+
+// ── STATS ─────────────────────────────────────────────────
+async function loadStats() {
+  const [{ count: total }, { count: pub }, { count: draft }, { count: subs }] = await Promise.all([
+    supabaseClient.from('blog_posts').select('*', { count:'exact', head:true }),
+    supabaseClient.from('blog_posts').select('*', { count:'exact', head:true }).eq('status','published'),
+    supabaseClient.from('blog_posts').select('*', { count:'exact', head:true }).eq('status','draft'),
+    supabaseClient.from('blog_subscribers').select('*', { count:'exact', head:true }),
+  ]);
+  document.getElementById('statTotal').textContent = total || 0;
+  document.getElementById('statPub').textContent   = pub   || 0;
+  document.getElementById('statDraft').textContent = draft || 0;
+  document.getElementById('statSubs').textContent  = subs  || 0;
+}
+
+// ── ARTICLES LIST ─────────────────────────────────────────
+async function loadRecentArticles() {
+  const { data } = await supabaseClient.from('blog_posts').select('*')
+    .order('created_at', { ascending: false }).limit(8);
+  renderArticleTable(data, 'dashRecentBody');
+}
+
+async function loadArticlesAdmin() {
+  const status = document.getElementById('filterStatus').value;
+  const cat    = document.getElementById('filterCat').value;
+  let q = supabaseClient.from('blog_posts').select('*').order('created_at', { ascending: false });
+  if (status !== 'all') q = q.eq('status', status);
+  if (cat !== 'all')    q = q.eq('category', cat);
+  const { data } = await q;
+  renderArticleTable(data, 'articlesBody');
+}
+
+function renderArticleTable(data, tbodyId) {
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted);font-style:italic">No articles yet. Click "+ New Article" to start.</td></tr>`;
+    return;
+  }
+  const catMap = {'web-dev':'Web Dev','mpesa':'M-Pesa','freelance':'Freelance','tools':'Tools','business':'Business','supabase':'Supabase','tutorials':'Tutorials'};
+  tbody.innerHTML = data.map(a => `
+    <tr>
+      <td><strong style="font-family:var(--font-d);font-size:0.95rem">${a.title}</strong></td>
+      <td style="font-family:var(--font-m);font-size:0.65rem;color:var(--muted)">${catMap[a.category]||a.category||'—'}</td>
+      <td><span class="status-badge status-${a.status}">${a.status}</span></td>
+      <td style="font-family:var(--font-m);font-size:0.65rem;color:var(--muted)">${a.published_at ? new Date(a.published_at).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}) : '—'}</td>
+      <td style="font-family:var(--font-m);font-size:0.72rem;color:var(--green)">${a.views||0}</td>
+      <td>
+        <button class="action-btn" onclick="editArticle('${a.id}')">Edit</button>
+        <button class="action-btn" onclick="window.open('blog-post.html?slug=${a.slug}','_blank')">View</button>
+        <button class="action-btn delete" onclick="deleteArticle('${a.id}','${a.title.replace(/'/g,"\'")}')">Delete</button>
+      </td>
+    </tr>`).join('');
+}
+
+// ── EDIT ──────────────────────────────────────────────────
+async function editArticle(id) {
+  const { data: a, error } = await supabaseClient.from('blog_posts').select('*').eq('id', id).single();
+  if (error || !a) { showToast('Could not load article', 'error'); return; }
+  editingId = id;
+  coverUploaded = a.cover_image || null;
+  document.getElementById('editingId').value = id;
+  document.getElementById('articleTitle').value    = a.title        || '';
+  document.getElementById('articleExcerpt').value  = a.excerpt      || '';
+  document.getElementById('articleSlug').value     = a.slug         || '';
+  document.getElementById('articleTags').value     = a.tags         || '';
+  document.getElementById('articleCategory').value = a.category     || 'web-dev';
+  document.getElementById('articleStatus').value   = a.status       || 'draft';
+  document.getElementById('coverImageUrl').value   = a.cover_image  || '';
+  document.getElementById('videoUrl').value        = a.video_url    || '';
+  document.getElementById('videoCaption').value    = a.video_caption|| '';
+  document.getElementById('videoPosition').value   = a.video_position||'top';
+  document.getElementById('contentArea').innerHTML = a.content      || '';
+  if (a.published_at) {
+    const d = new Date(a.published_at);
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    document.getElementById('articleDate').value = d.toISOString().slice(0,16);
+  }
+  if (a.cover_image) {
+    document.getElementById('coverPreviewWrap').innerHTML =
+      `<img src="${a.cover_image}" class="upload-preview" alt="Cover"/>`;
+    document.getElementById('coverClearBtn').style.display = 'block';
+  }
+  switchTab('write');
+}
+
+// ── SAVE ──────────────────────────────────────────────────
+async function saveArticle(status) {
+  const title   = document.getElementById('articleTitle').value.trim();
+  const content = document.getElementById('contentArea').innerHTML.trim();
+  if (!title) { showToast('Please enter a title', 'error'); return; }
+
+  // Final image: uploaded takes priority over URL
+  const imgUrl = coverUploaded || document.getElementById('coverImageUrl').value.trim() || '';
+
+  const payload = {
+    title,
+    slug:           document.getElementById('articleSlug').value.trim() || slugify(title),
+    excerpt:        document.getElementById('articleExcerpt').value.trim(),
+    content,
+    category:       document.getElementById('articleCategory').value,
+    tags:           document.getElementById('articleTags').value.trim(),
+    cover_image:    imgUrl,
+    video_url:      document.getElementById('videoUrl').value.trim(),
+    video_caption:  document.getElementById('videoCaption').value.trim(),
+    video_position: document.getElementById('videoPosition').value,
+    status,
+    published_at:   status === 'published' ? new Date(document.getElementById('articleDate').value).toISOString() : null,
+    views:          0,
+  };
+
+  let error;
+  if (editingId) {
+    delete payload.views;
+    ({ error } = await supabaseClient.from('blog_posts').update(payload).eq('id', editingId));
+  } else {
+    ({ error } = await supabaseClient.from('blog_posts').insert([payload]));
+  }
+
+  if (error) { showToast('Error saving: ' + error.message, 'error'); return; }
+  showToast(status === 'published' ? 'Article published!' : 'Saved as draft!', 'success');
+  loadStats();
+  loadRecentArticles();
+  if (status === 'published') {
+    setTimeout(() => window.open(`blog-post.html?slug=${payload.slug}`, '_blank'), 800);
+  }
+}
+
+// ── DELETE ────────────────────────────────────────────────
+async function deleteArticle(id, title) {
+  if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
+  const { error } = await supabaseClient.from('blog_posts').delete().eq('id', id);
+  if (error) { showToast('Error deleting', 'error'); return; }
+  showToast('Article deleted', 'success');
+  loadArticlesAdmin();
+  loadStats();
+}
+
+// ── COVER IMAGE ───────────────────────────────────────────
+async function handleCoverFile(file) {
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { showToast('Image too large (max 5MB)', 'error'); return; }
+  document.getElementById('coverPreviewWrap').innerHTML =
+    `<div style="padding:1rem;font-family:var(--font-m);font-size:0.7rem;color:var(--green)">&#x23F3; Uploading...</div>`;
+  const ext  = file.name.split('.').pop();
+  const name = `blog/${Date.now()}.${ext}`;
+  const { data, error } = await supabaseClient.storage.from('blog-images').upload(name, file, { cacheControl:'3600', upsert:false });
+  if (error) { showToast('Upload failed: ' + error.message, 'error');
+    document.getElementById('coverPreviewWrap').innerHTML = `<div class="upload-zone-icon">&#x1F4F7;</div><div class="upload-zone-text">Upload failed. Try again.</div>`;
+    return;
+  }
+  const { data: urlData } = supabaseClient.storage.from('blog-images').getPublicUrl(name);
+  coverUploaded = urlData.publicUrl;
+  document.getElementById('coverImageUrl').value = coverUploaded;
+  document.getElementById('coverPreviewWrap').innerHTML = `<img src="${coverUploaded}" class="upload-preview" alt="Cover"/>`;
+  document.getElementById('coverClearBtn').style.display = 'block';
+  showToast('Image uploaded!', 'success');
+}
+
+function handleCoverDrop(e) {
+  const file = e.dataTransfer.files[0];
+  if (file) handleCoverFile(file);
+}
+
+function previewCoverUrl(url) {
+  if (!url) return;
+  document.getElementById('coverPreviewWrap').innerHTML = `<img src="${url}" class="upload-preview" alt="Cover" onerror="this.style.display='none'"/>`;
+  coverUploaded = null;
+  document.getElementById('coverClearBtn').style.display = 'block';
+}
+
+function clearCover() {
+  coverUploaded = null;
+  document.getElementById('coverImageUrl').value = '';
+  document.getElementById('coverPreviewWrap').innerHTML =
+    `<div class="upload-zone-icon">&#x1F4F7;</div><div class="upload-zone-text">Click to upload cover image<br/>or drag &amp; drop</div>`;
+  document.getElementById('coverClearBtn').style.display = 'none';
+}
+
+// ── TOOLBAR FUNCTIONS ─────────────────────────────────────
+function fmt(cmd) { document.getElementById('contentArea').focus(); document.execCommand(cmd, false, null); }
+
+function insertHeading(level) {
+  document.getElementById('contentArea').focus();
+  document.execCommand('formatBlock', false, `h${level}`);
+}
+
+function insertBlockquote() {
+  document.getElementById('contentArea').focus();
+  document.execCommand('insertHTML', false,
+    '<blockquote><p>Your quote here...</p><cite>— Source</cite></blockquote><p></p>');
+}
+
+function insertCode() {
+  document.getElementById('contentArea').focus();
+  document.execCommand('insertHTML', false,
+    '<pre><code>// Your code here
+console.log("Hello Kenya!");</code></pre><p></p>');
+}
+
+function insertInfoBox() {
+  document.getElementById('contentArea').focus();
+  document.execCommand('insertHTML', false,
+    '<div class="info-box"><div class="info-box-title">&#x2139; Note</div><p>Your note here...</p></div><p></p>');
+}
+
+function insertPullQuote() {
+  document.getElementById('contentArea').focus();
+  document.execCommand('insertHTML', false,
+    '<p class="pull-quote">Your pull quote here &mdash; the key takeaway from this section.</p><p></p>');
+}
+
+function insertImageInContent() {
+  const url = prompt('Enter image URL:');
+  if (!url) return;
+  const caption = prompt('Add a caption (optional):') || '';
+  document.getElementById('contentArea').focus();
+  document.execCommand('insertHTML', false,
+    `<figure><img src="${url}" alt="${caption}" style="max-width:100%;display:block"/>${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure><p></p>`);
+}
+
+function insertYouTube() {
+  const url = prompt('Paste YouTube video URL:');
+  if (!url) return;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=))([^"&?\/\s]{11})/);
+  if (!match) { alert('Could not find YouTube video ID. Try the full URL.'); return; }
+  const id = match[1];
+  const caption = prompt('Add a video caption (optional):') || '';
+  document.getElementById('contentArea').focus();
+  document.execCommand('insertHTML', false,
+    `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${id}" allowfullscreen loading="lazy"></iframe></div>${caption ? `<p class="video-caption">${caption}</p>` : ''}<p></p>`);
+}
+
+function insertLink() {
+  const url  = prompt('Enter link URL:');
+  const text = prompt('Link text:');
+  if (!url || !text) return;
+  document.getElementById('contentArea').focus();
+  document.execCommand('insertHTML', false, `<a href="${url}" target="_blank">${text}</a>`);
+}
+
+// ── AUTO SLUG ─────────────────────────────────────────────
+function slugify(text) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+function autoSlug() {
+  const title = document.getElementById('articleTitle').value;
+  if (!editingId) {
+    document.getElementById('articleSlug').value = slugify(title);
+  }
+}
+
+// ── SUBSCRIBERS ───────────────────────────────────────────
+async function loadSubscribers() {
+  const { data } = await supabaseClient.from('blog_subscribers')
+    .select('*').order('created_at', { ascending: false });
+  const tbody = document.getElementById('subsBody');
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="2" style="text-align:center;padding:2rem;color:var(--muted);font-style:italic">No subscribers yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map(s => `
+    <tr>
+      <td style="font-family:var(--font-m);font-size:0.82rem">${s.email}</td>
+      <td style="font-family:var(--font-m);font-size:0.72rem;color:var(--muted)">${new Date(s.created_at).toLocaleDateString('en-KE',{day:'numeric',month:'long',year:'numeric'})}</td>
+    </tr>`).join('');
+}
+
+function exportSubscribers() {
+  const rows = document.querySelectorAll('#subsBody tr');
+  let csv = 'Email,Subscribed On\n';
+  rows.forEach(r => {
+    const cells = r.querySelectorAll('td');
+    if (cells.length >= 2) csv += `${cells[0].textContent},${cells[1].textContent}\n`;
+  });
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'blog_subscribers.csv';
+  a.click();
+}
+
+// ── TOAST ─────────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className   = 'show ' + type;
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
