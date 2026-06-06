@@ -390,7 +390,7 @@ document.getElementById('searchInput')?.addEventListener('keydown', async (e) =>
   const q = e.target.value.trim();
   if (!q) return;
   document.getElementById('searchBar').classList.remove('open');
-  window.location.href = `blog.html?search=${encodeURIComponent(q)}`;
+  window.location.href = `index.html?search=${encodeURIComponent(q)}`;
 });
 
 // ── CATEGORY FILTER ────────────────────────────────────────
@@ -409,7 +409,7 @@ document.getElementById('loadMoreBtn')?.addEventListener('click', () =>
 // ── TAG CLOUD ─────────────────────────────────────────────
 document.querySelectorAll('.tag-pill').forEach(pill => {
   pill.addEventListener('click', () => {
-    window.location.href = `blog.html?tag=${pill.dataset.tag}`;
+    window.location.href = `index.html?tag=${pill.dataset.tag}`;
   });
 });
 
