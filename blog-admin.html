@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Blog Admin — Get.Techy254</title>
+  <title>Blog Admin -- Get.Techy254</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,900&family=Lora:wght@400;500&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
@@ -249,10 +249,10 @@
   <!-- OVERVIEW TAB -->
   <div id="tabDash">
     <div class="stats-row">
-      <div class="stat-box"><div class="stat-box-num" id="statTotal">—</div><div class="stat-box-label">Total Articles</div></div>
-      <div class="stat-box"><div class="stat-box-num" id="statPub">—</div><div class="stat-box-label">Published</div></div>
-      <div class="stat-box"><div class="stat-box-num" id="statDraft">—</div><div class="stat-box-label">Drafts</div></div>
-      <div class="stat-box"><div class="stat-box-num" id="statSubs">—</div><div class="stat-box-label">Subscribers</div></div>
+      <div class="stat-box"><div class="stat-box-num" id="statTotal">--</div><div class="stat-box-label">Total Articles</div></div>
+      <div class="stat-box"><div class="stat-box-num" id="statPub">--</div><div class="stat-box-label">Published</div></div>
+      <div class="stat-box"><div class="stat-box-num" id="statDraft">--</div><div class="stat-box-label">Drafts</div></div>
+      <div class="stat-box"><div class="stat-box-num" id="statSubs">--</div><div class="stat-box-label">Subscribers</div></div>
     </div>
     <div class="admin-main">
       <p style="font-family:var(--font-m);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem">Recent Articles</p>
@@ -345,10 +345,10 @@
               data-placeholder="Start writing your article here...
 
 Use the toolbar above to:
-• Bold, italic, headings
-• Add bullet lists
-• Insert images and YouTube videos
-• Add code blocks and blockquotes
+- Bold, italic, headings
+- Add bullet lists
+- Insert images and YouTube videos
+- Add code blocks and blockquotes
 
 Tip: Write at least 800 words for good SEO."></div>
           </div>
@@ -394,7 +394,7 @@ Tip: Write at least 800 words for good SEO."></div>
               </div>
               <input type="file" id="coverFileInput" accept="image/jpeg,image/png,image/webp" style="display:none"
                 onchange="handleCoverFile(this.files[0])"/>
-              <div class="or-divider">— or paste URL —</div>
+              <div class="or-divider">-- or paste URL --</div>
               <input type="text" id="coverImageUrl" class="editor-input" placeholder="https://..."
                 oninput="previewCoverUrl(this.value)"/>
               <div id="coverClearBtn" style="display:none;margin-top:0.5rem">
@@ -478,7 +478,7 @@ Tip: Write at least 800 words for good SEO."></div>
 </div>
 
 <script>
-// ── AUTH ──────────────────────────────────────────────────
+// -- AUTH --------------------------------------------------
 let currentUser = null;
 let editingId   = null;
 let coverUploaded = null;
@@ -517,7 +517,7 @@ function showDashboard() {
   loadRecentArticles();
 }
 
-// ── TABS ──────────────────────────────────────────────────
+// -- TABS --------------------------------------------------
 function switchTab(tab) {
   ['dash','articles','write','subs'].forEach(t => {
     document.getElementById('tab'+capitalize(t)).style.display = t === tab ? 'block' : 'none';
@@ -547,7 +547,7 @@ function newArticle() {
   switchTab('write');
 }
 
-// ── STATS ─────────────────────────────────────────────────
+// -- STATS -------------------------------------------------
 async function loadStats() {
   const [{ count: total }, { count: pub }, { count: draft }, { count: subs }] = await Promise.all([
     supabaseClient.from('blog_posts').select('*', { count:'exact', head:true }),
@@ -561,7 +561,7 @@ async function loadStats() {
   document.getElementById('statSubs').textContent  = subs  || 0;
 }
 
-// ── ARTICLES LIST ─────────────────────────────────────────
+// -- ARTICLES LIST -----------------------------------------
 async function loadRecentArticles() {
   const { data } = await supabaseClient.from('blog_posts').select('*')
     .order('created_at', { ascending: false }).limit(8);
@@ -589,9 +589,9 @@ function renderArticleTable(data, tbodyId) {
   tbody.innerHTML = data.map(a => `
     <tr>
       <td><strong style="font-family:var(--font-d);font-size:0.95rem">${a.title}</strong></td>
-      <td style="font-family:var(--font-m);font-size:0.65rem;color:var(--muted)">${catMap[a.category]||a.category||'—'}</td>
+      <td style="font-family:var(--font-m);font-size:0.65rem;color:var(--muted)">${catMap[a.category]||a.category||'--'}</td>
       <td><span class="status-badge status-${a.status}">${a.status}</span></td>
-      <td style="font-family:var(--font-m);font-size:0.65rem;color:var(--muted)">${a.published_at ? new Date(a.published_at).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}) : '—'}</td>
+      <td style="font-family:var(--font-m);font-size:0.65rem;color:var(--muted)">${a.published_at ? new Date(a.published_at).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}) : '--'}</td>
       <td style="font-family:var(--font-m);font-size:0.72rem;color:var(--green)">${a.views||0}</td>
       <td>
         <button class="action-btn" onclick="editArticle('${a.id}')">Edit</button>
@@ -601,7 +601,7 @@ function renderArticleTable(data, tbodyId) {
     </tr>`).join('');
 }
 
-// ── EDIT ──────────────────────────────────────────────────
+// -- EDIT --------------------------------------------------
 async function editArticle(id) {
   const { data: a, error } = await supabaseClient.from('blog_posts').select('*').eq('id', id).single();
   if (error || !a) { showToast('Could not load article', 'error'); return; }
@@ -632,7 +632,7 @@ async function editArticle(id) {
   switchTab('write');
 }
 
-// ── SAVE ──────────────────────────────────────────────────
+// -- SAVE --------------------------------------------------
 async function saveArticle(status) {
   const title   = document.getElementById('articleTitle').value.trim();
   const content = document.getElementById('contentArea').innerHTML.trim();
@@ -674,7 +674,7 @@ async function saveArticle(status) {
   }
 }
 
-// ── DELETE ────────────────────────────────────────────────
+// -- DELETE ------------------------------------------------
 async function deleteArticle(id, title) {
   if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
   const { error } = await supabaseClient.from('blog_posts').delete().eq('id', id);
@@ -684,7 +684,7 @@ async function deleteArticle(id, title) {
   loadStats();
 }
 
-// ── COVER IMAGE ───────────────────────────────────────────
+// -- COVER IMAGE -------------------------------------------
 async function handleCoverFile(file) {
   if (!file) return;
   if (file.size > 5 * 1024 * 1024) { showToast('Image too large (max 5MB)', 'error'); return; }
@@ -725,7 +725,7 @@ function clearCover() {
   document.getElementById('coverClearBtn').style.display = 'none';
 }
 
-// ── TOOLBAR FUNCTIONS ─────────────────────────────────────
+// -- TOOLBAR FUNCTIONS -------------------------------------
 function fmt(cmd) { document.getElementById('contentArea').focus(); document.execCommand(cmd, false, null); }
 
 function insertHeading(level) {
@@ -736,14 +736,13 @@ function insertHeading(level) {
 function insertBlockquote() {
   document.getElementById('contentArea').focus();
   document.execCommand('insertHTML', false,
-    '<blockquote><p>Your quote here...</p><cite>— Source</cite></blockquote><p></p>');
+    '<blockquote><p>Your quote here...</p><cite>-- Source</cite></blockquote><p></p>');
 }
 
 function insertCode() {
   document.getElementById('contentArea').focus();
   document.execCommand('insertHTML', false,
-    '<pre><code>// Your code here
-console.log("Hello Kenya!");</code></pre><p></p>');
+    '<pre><code>// Your code here\nconsole.log(\'Hello Kenya!\');</code></pre><p></p>');
 }
 
 function insertInfoBox() {
@@ -787,7 +786,7 @@ function insertLink() {
   document.execCommand('insertHTML', false, `<a href="${url}" target="_blank">${text}</a>`);
 }
 
-// ── AUTO SLUG ─────────────────────────────────────────────
+// -- AUTO SLUG ---------------------------------------------
 function slugify(text) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
@@ -798,7 +797,7 @@ function autoSlug() {
   }
 }
 
-// ── SUBSCRIBERS ───────────────────────────────────────────
+// -- SUBSCRIBERS -------------------------------------------
 async function loadSubscribers() {
   const { data } = await supabaseClient.from('blog_subscribers')
     .select('*').order('created_at', { ascending: false });
@@ -827,7 +826,7 @@ function exportSubscribers() {
   a.click();
 }
 
-// ── TOAST ─────────────────────────────────────────────────
+// -- TOAST -------------------------------------------------
 function showToast(msg, type = 'success') {
   const t = document.getElementById('toast');
   t.textContent = msg;
