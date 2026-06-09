@@ -206,6 +206,68 @@
 
 <div id="toast"></div>
 
+<!-- PASTE HTML MODAL -->
+<div id="pasteModal" style="display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(26,18,8,0.85);align-items:center;justify-content:center;padding:2rem">
+  <div style="background:var(--paper);width:100%;max-width:700px;border-radius:4px;overflow:hidden;
+    box-shadow:0 24px 64px rgba(0,0,0,0.5)">
+    <!-- Modal header -->
+    <div style="background:var(--ink);padding:1rem 1.5rem;display:flex;align-items:center;
+      justify-content:space-between;border-bottom:3px solid var(--green)">
+      <div>
+        <div style="font-family:var(--font-d);font-size:1rem;font-weight:700;
+          color:var(--paper);font-style:italic">Paste HTML Content</div>
+        <div style="font-family:var(--font-m);font-size:0.6rem;color:rgba(250,247,242,0.45);
+          letter-spacing:1px;margin-top:0.15rem">Paste your raw HTML below — it will be rendered correctly in the editor</div>
+      </div>
+      <button onclick="closePasteModal()"
+        style="background:none;border:none;color:rgba(250,247,242,0.5);
+        font-size:1.4rem;cursor:pointer;line-height:1">&#x2715;</button>
+    </div>
+    <!-- Instructions -->
+    <div style="background:var(--paper2);padding:0.7rem 1.5rem;
+      font-family:var(--font-m);font-size:0.62rem;color:var(--muted);
+      border-bottom:1px solid var(--rule);line-height:1.6">
+      &#x2139; Copy the HTML from Claude → paste it in the box below → click <strong style="color:var(--green)">Insert into Article</strong>
+    </div>
+    <!-- Textarea -->
+    <div style="padding:1.2rem 1.5rem">
+      <textarea id="htmlPasteArea"
+        placeholder="Paste your HTML here...
+
+Example:
+&lt;p&gt;M-Pesa is Kenya's dominant payment method...&lt;/p&gt;
+&lt;h2&gt;What You Will Need&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;A Paystack account&lt;/li&gt;
+&lt;/ul&gt;"
+        style="width:100%;height:280px;background:var(--ink);color:#A8D8A8;
+          font-family:var(--font-m);font-size:0.75rem;line-height:1.7;
+          padding:1rem;border:none;outline:none;resize:none;
+          box-sizing:border-box;border-radius:4px"></textarea>
+    </div>
+    <!-- Buttons -->
+    <div style="padding:0 1.5rem 1.2rem;display:flex;gap:0.8rem">
+      <button onclick="insertHTMLContent()"
+        style="flex:1;background:var(--green);color:var(--paper);border:none;
+          padding:0.9rem;font-family:var(--font-m);font-size:0.7rem;
+          letter-spacing:2px;text-transform:uppercase;cursor:pointer;
+          transition:background var(--t);border-radius:4px"
+        onmouseover="this.style.background='var(--green2)'"
+        onmouseout="this.style.background='var(--green)'">
+        &#x2713; Insert into Article
+      </button>
+      <button onclick="closePasteModal()"
+        style="flex:0 0 120px;background:transparent;color:var(--muted);
+          border:1px solid var(--rule);padding:0.9rem;font-family:var(--font-m);
+          font-size:0.65rem;letter-spacing:1.5px;text-transform:uppercase;
+          cursor:pointer;border-radius:4px">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- LOGIN -->
 <div id="loginPage">
   <div class="login-card">
@@ -341,6 +403,11 @@
               <button class="tool-btn" onclick="insertLink()" title="Insert link">&#x1F517;</button>
               <div class="tool-divider"></div>
               <button class="tool-btn" onclick="fmt('removeFormat')" title="Clear formatting">&#x2715;</button>
+              <div class="tool-divider"></div>
+              <button class="tool-btn" onclick="pasteHTMLContent()" title="Paste raw HTML and render it"
+                style="background:var(--green);color:var(--paper);font-weight:700;padding:0.3rem 0.8rem;font-size:0.72rem;letter-spacing:0.5px">
+                &#x1F4CB; Paste HTML
+              </button>
             </div>
             <div id="contentArea" contenteditable="true"
               data-placeholder="Start writing your article here...
@@ -825,6 +892,37 @@ function exportSubscribers() {
   a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
   a.download = 'blog_subscribers.csv';
   a.click();
+}
+
+// -- PASTE HTML MODAL -------------------------------------
+function pasteHTMLContent() {
+  const modal = document.getElementById('pasteModal');
+  modal.style.display = 'flex';
+  document.getElementById('htmlPasteArea').value = '';
+  setTimeout(() => document.getElementById('htmlPasteArea').focus(), 100);
+}
+
+function closePasteModal() {
+  document.getElementById('pasteModal').style.display = 'none';
+  document.getElementById('htmlPasteArea').value = '';
+}
+
+function insertHTMLContent() {
+  const raw = document.getElementById('htmlPasteArea').value.trim();
+  if (!raw) { showToast('Please paste some HTML first', 'error'); return; }
+  // Strip any wrapper tags if present
+  let html = raw
+    .replace(/<!DOCTYPE[^>]*>/gi, '')
+    .replace(/<html[^>]*>/gi, '').replace(/<\/html>/gi, '')
+    .replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
+    .replace(/<body[^>]*>/gi, '').replace(/<\/body>/gi, '')
+    .trim();
+  // Insert into editor
+  const editor = document.getElementById('contentArea');
+  editor.innerHTML = html;
+  closePasteModal();
+  showToast('HTML inserted! Scroll the editor to review.', 'success');
+  editor.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 // -- TOAST -------------------------------------------------
