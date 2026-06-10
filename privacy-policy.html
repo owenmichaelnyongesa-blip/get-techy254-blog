@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Get.Techy254</title>
+  <meta name="description" content="Privacy Policy for Get.Techy254 blog — how we collect, use, and protect your data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Lora:ital,wght@0,400;0,500;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #1A5C3A;
+      --green-light: #2D7A52;
+      --green-pale:  #EAF2ED;
+      --ink:         #1C1C1C;
+      --ink-mid:     #444444;
+      --ink-soft:    #6B6B6B;
+      --rule:        #D4DDD7;
+      --paper:       #FAFAF8;
+      --white:       #FFFFFF;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.8;
+    }
+
+    /* ── NAV ── */
+    nav {
+      border-bottom: 1px solid var(--rule);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--green);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span {
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+    .nav-back {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      color: var(--green);
+      text-decoration: none;
+      border: 1px solid var(--green);
+      padding: 5px 14px;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-back:hover { background: var(--green); color: var(--white); }
+
+    /* ── HERO ── */
+    .page-hero {
+      border-bottom: 1px solid var(--rule);
+      padding: 64px 24px 48px;
+      text-align: center;
+      background: var(--white);
+    }
+    .page-eyebrow {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 16px;
+    }
+    .page-hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .page-meta {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+    }
+    .page-meta a { color: var(--green); text-decoration: none; }
+    .page-meta a:hover { text-decoration: underline; }
+
+    /* ── LAYOUT ── */
+    .page-layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* ── TOC SIDEBAR ── */
+    .toc {
+      position: sticky;
+      top: 80px;
+    }
+    .toc-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .toc ol {
+      list-style: none;
+      counter-reset: toc-counter;
+    }
+    .toc ol li {
+      counter-increment: toc-counter;
+      margin-bottom: 8px;
+    }
+    .toc ol li::before {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      color: var(--green);
+      content: counter(toc-counter, decimal-leading-zero) ". ";
+    }
+    .toc ol li a {
+      font-family: 'Lora', serif;
+      font-size: 0.82rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      line-height: 1.5;
+      transition: color 0.15s;
+    }
+    .toc ol li a:hover { color: var(--green); }
+
+    /* ── ARTICLE BODY ── */
+    .policy-body h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin: 48px 0 16px;
+      padding-top: 48px;
+      border-top: 1px solid var(--rule);
+    }
+    .policy-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+    .policy-body p {
+      font-size: 1rem;
+      color: var(--ink);
+      margin-bottom: 18px;
+      line-height: 1.85;
+    }
+
+    .policy-body ul, .policy-body ol {
+      padding-left: 24px;
+      margin-bottom: 18px;
+    }
+    .policy-body ul li, .policy-body ol li {
+      margin-bottom: 8px;
+      font-size: 0.97rem;
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    .policy-body a {
+      color: var(--green);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .callout {
+      background: var(--green-pale);
+      border-left: 3px solid var(--green);
+      padding: 18px 20px;
+      margin: 28px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .callout p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+    .callout strong {
+      color: var(--green);
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82em;
+      background: #F0F0EE;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--green);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      background: var(--white);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    footer p {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      line-height: 1.8;
+    }
+    footer a { color: var(--green); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 40px 16px;
+      }
+      .toc { position: static; }
+      .page-hero { padding: 40px 16px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Get.Techy<span>254</span></a>
+      <a href="index.html" class="nav-back">← Back to Blog</a>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <p class="page-eyebrow">Legal · Site Policy</p>
+    <h1>Privacy Policy</h1>
+    <p class="page-meta">Get.Techy254 &nbsp;·&nbsp; Last updated: June 2025 &nbsp;·&nbsp; Contact: <a href="mailto:get.techy254@gmail.com">get.techy254@gmail.com</a></p>
+  </header>
+
+  <div class="page-layout">
+
+    <aside class="toc">
+      <p class="toc-label">Contents</p>
+      <ol>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#information-collected">Information We Collect</a></li>
+        <li><a href="#how-we-use">How We Use Your Information</a></li>
+        <li><a href="#cookies">Cookies & Tracking</a></li>
+        <li><a href="#advertising">Advertising</a></li>
+        <li><a href="#third-parties">Third-Party Services</a></li>
+        <li><a href="#your-rights">Your Rights</a></li>
+        <li><a href="#data-retention">Data Retention</a></li>
+        <li><a href="#children">Children's Privacy</a></li>
+        <li><a href="#changes">Changes to This Policy</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ol>
+    </aside>
+
+    <main class="policy-body">
+
+      <h2 id="introduction">1. Introduction</h2>
+      <p>Welcome to Get.Techy254 ("we", "us", or "our"). This Privacy Policy explains how we collect, use, and protect information when you visit our website at <a href="https://get-techy254-blog.vercel.app">get-techy254-blog.vercel.app</a> (the "Site").</p>
+      <p>By using this Site, you agree to the practices described in this policy. If you do not agree, please discontinue use of the Site.</p>
+      <p>Get.Techy254 is operated by Michael Owen Nyongesa, based in Nairobi, Kenya.</p>
+
+      <h2 id="information-collected">2. Information We Collect</h2>
+      <p>We collect two categories of information:</p>
+
+      <p><strong>Information you provide directly:</strong></p>
+      <ul>
+        <li><strong>Newsletter subscriptions:</strong> If you subscribe to our newsletter, we collect your email address. This is stored securely in our Supabase database.</li>
+        <li><strong>Contact enquiries:</strong> If you contact us via email, we retain your name and email address to respond to your enquiry.</li>
+      </ul>
+
+      <p><strong>Information collected automatically:</strong></p>
+      <ul>
+        <li><strong>Usage data:</strong> Pages visited, time spent on pages, referring URLs, and browser/device type. This is collected via analytics tools (see Section 4).</li>
+        <li><strong>IP address:</strong> Your approximate location may be inferred from your IP address for analytics purposes.</li>
+        <li><strong>Cookies:</strong> Small text files placed on your device to improve your experience and enable advertising (see Section 4).</li>
+      </ul>
+
+      <h2 id="how-we-use">3. How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Deliver and improve the content on this Site</li>
+        <li>Send newsletters to subscribers who have opted in</li>
+        <li>Understand how visitors use the Site (analytics)</li>
+        <li>Display relevant advertisements to support the free operation of this blog</li>
+        <li>Respond to enquiries and support requests</li>
+        <li>Comply with applicable legal obligations</li>
+      </ul>
+      <p>We do not sell your personal information to third parties.</p>
+
+      <h2 id="cookies">4. Cookies &amp; Tracking</h2>
+      <p>This Site uses cookies and similar tracking technologies. Cookies are small text files stored on your device that help us and our advertising partners recognise your browser and remember certain information.</p>
+
+      <p>We use the following types of cookies:</p>
+      <ul>
+        <li><strong>Essential cookies:</strong> Required for the Site to function correctly. These cannot be disabled.</li>
+        <li><strong>Analytics cookies:</strong> Used to understand visitor behaviour and improve the Site. These may include tools such as Google Analytics.</li>
+        <li><strong>Advertising cookies:</strong> Used to display relevant ads and measure their effectiveness. These are set by our advertising partners (see Section 5).</li>
+      </ul>
+
+      <div class="callout">
+        <p><strong>Managing cookies:</strong> You can disable cookies through your browser settings. Note that disabling cookies may affect your experience on this and other websites. Most browsers allow you to refuse cookies or delete existing ones under Settings → Privacy.</p>
+      </div>
+
+      <h2 id="advertising">5. Advertising</h2>
+      <p>This Site displays advertisements to support its free operation. We work with advertising networks that may use cookies and similar technologies to show you relevant ads based on your interests and browsing behaviour.</p>
+
+      <p>Our advertising partners may include:</p>
+      <ul>
+        <li><strong>Ezoic</strong> — an AI-driven ad platform that uses cookies to personalise and optimise ad display. Ezoic's privacy policy is available at <a href="https://www.ezoic.com/privacy-policy/" target="_blank" rel="noopener">ezoic.com/privacy-policy</a>.</li>
+        <li><strong>Google AdSense / Google Ad Manager</strong> — Google may use cookies to serve ads based on your prior visits to this or other websites. You can opt out of personalised advertising at <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">google.com/settings/ads</a>.</li>
+      </ul>
+
+      <p>These advertising partners operate independently and have their own privacy policies governing their use of your data. We encourage you to review their policies.</p>
+
+      <p>To opt out of interest-based advertising from participating companies, you may also visit <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">aboutads.info/choices</a> or <a href="https://www.networkadvertising.org/choices/" target="_blank" rel="noopener">networkadvertising.org/choices</a>.</p>
+
+      <h2 id="third-parties">6. Third-Party Services</h2>
+      <p>This Site integrates with the following third-party services, each with their own privacy practices:</p>
+      <ul>
+        <li><strong>Supabase</strong> — used to store newsletter subscriber emails and blog content. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</li>
+        <li><strong>Vercel</strong> — our hosting provider. See <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">vercel.com/legal/privacy-policy</a>.</li>
+        <li><strong>Google Fonts</strong> — fonts loaded from Google's servers. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</li>
+        <li><strong>YouTube</strong> — some articles may embed YouTube videos. YouTube may set cookies when you play a video. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</li>
+      </ul>
+
+      <h2 id="your-rights">7. Your Rights</h2>
+      <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
+        <li><strong>Correction:</strong> Request correction of inaccurate data.</li>
+        <li><strong>Deletion:</strong> Request deletion of your personal data (e.g. newsletter unsubscribe).</li>
+        <li><strong>Objection:</strong> Object to processing of your data for direct marketing purposes.</li>
+        <li><strong>Withdrawal of consent:</strong> Withdraw consent at any time where processing is based on consent (e.g. newsletter).</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:get.techy254@gmail.com">get.techy254@gmail.com</a>. We will respond within 30 days.</p>
+
+      <p>Newsletter subscribers can unsubscribe at any time by clicking the unsubscribe link in any newsletter email.</p>
+
+      <h2 id="data-retention">8. Data Retention</h2>
+      <p>We retain your data for as long as necessary to fulfil the purposes described in this policy:</p>
+      <ul>
+        <li><strong>Newsletter subscriber emails:</strong> Retained until you unsubscribe or request deletion.</li>
+        <li><strong>Analytics data:</strong> Retained according to the policies of our analytics providers (typically 14–26 months).</li>
+        <li><strong>Contact enquiry emails:</strong> Retained for up to 12 months after the enquiry is resolved.</li>
+      </ul>
+
+      <h2 id="children">9. Children's Privacy</h2>
+      <p>This Site is not directed at children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us immediately at <a href="mailto:get.techy254@gmail.com">get.techy254@gmail.com</a> and we will delete it promptly.</p>
+
+      <h2 id="changes">10. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date at the top. Continued use of the Site after changes constitutes acceptance of the updated policy.</p>
+      <p>We encourage you to review this page periodically.</p>
+
+      <h2 id="contact">11. Contact Us</h2>
+      <p>If you have questions, concerns, or requests regarding this Privacy Policy, please contact us:</p>
+      <ul>
+        <li><strong>Name:</strong> Michael Owen Nyongesa</li>
+        <li><strong>Business:</strong> Get.Techy254</li>
+        <li><strong>Email:</strong> <a href="mailto:get.techy254@gmail.com">get.techy254@gmail.com</a></li>
+        <li><strong>Location:</strong> Nairobi, Kenya</li>
+      </ul>
+
+      <div class="callout">
+        <p><strong>Response time:</strong> We aim to respond to all privacy-related enquiries within 7 business days.</p>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    <p>
+      © 2025 Get.Techy254 · Michael Owen Nyongesa · Nairobi, Kenya<br>
+      <a href="index.html">Blog Home</a> &nbsp;·&nbsp;
+      <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+      <a href="about.html">About</a> &nbsp;·&nbsp;
+      <a href="mailto:get.techy254@gmail.com">get.techy254@gmail.com</a>
+    </p>
+  </footer>
+
+</body>
+</html>
