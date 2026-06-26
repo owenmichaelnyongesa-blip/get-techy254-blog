@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://get-techy254-blog.vercel.app/sitemap.xml
