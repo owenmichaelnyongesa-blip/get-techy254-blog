@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/index.html</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Article 1: How to Add M-Pesa Payments to Any Website in Kenya -->
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/blog-post.html?slug=how-to-add-m-pesa-payments-to-any-website-in-kenya-2024-guide</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Article 2: Free Hosting for Kenyan Websites: GitHub + Vercel -->
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/blog-post.html?slug=free-hosting-for-kenyan-websites-github-vercel-complete-guide</loc>
+    <lastmod>2026-06-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Article 3: Supabase for Beginners: Free Database for Your Kenyan Website -->
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/blog-post.html?slug=supabase-for-beginners-free-database-for-your-kenyan-website</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Article 4: How to Connect a .co.ke Domain to Vercel for Free -->
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/blog-post.html?slug=how-to-connect-a-co-ke-domain-to-vercel-for-free</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Article 5: Supabase Free Database for Beginners (RLS/schema deep-dive) -->
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/blog-post.html?slug=supabase-free-database-for-beginners-complete-guide-for-kenyan-web-developers</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Article 6: How to Prevent Supabase from Pausing Your Free Project -->
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/blog-post.html?slug=how-to-prevent-supabase-from-pausing-your-free-project-keepalive-solution</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Article 7: How to Find Your First Web Design Client in Nairobi -->
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/blog-post.html?slug=how-to-find-your-first-web-design-client-in-nairobi-practical-guide-for-beginners</loc>
+    <lastmod>2026-06-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/about.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://get-techy254-blog.vercel.app/privacy-policy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
