@@ -5,9 +5,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title id="pageTitle">Article — Get.Techy254 Blog</title>
   <meta name="description" id="pageDesc" content="Get.Techy254 Blog"/>
+  <link rel="canonical" id="canonicalTag" href="https://get-techy254-blog.vercel.app/blog-post.html"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="blog-style.css"/>
+  <script>
+    // Set canonical URL dynamically based on current page URL
+    (function() {
+      var canonical = document.getElementById('canonicalTag');
+      if (canonical) {
+        canonical.href = window.location.href;
+      }
+    })();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
 </head>
@@ -192,10 +202,17 @@
           <li><a href="mailto:get.techy254@gmail.com">get.techy254@gmail.com</a></li>
         </ul>
       </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 Get.Techy254 &mdash; Nyongesa Michael Owen</span>
-      <span>Built with HTML &middot; Supabase &middot; Vercel</span>
+      <span>Built with HTML &middot; Supabase &middot; Vercel &nbsp;&middot;&nbsp; <a href="about.html">About</a> &nbsp;&middot;&nbsp; <a href="privacy-policy.html">Privacy Policy</a></span>
     </div>
   </div>
 </footer>
