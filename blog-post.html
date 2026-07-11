@@ -6,18 +6,23 @@
   <title id="pageTitle">Article — Get.Techy254 Blog</title>
   <meta name="description" id="pageDesc" content="Get.Techy254 Blog"/>
   <link rel="canonical" id="canonicalTag" href="https://get-techy254-blog.vercel.app/blog-post.html"/>
+  <script>
+    (function() {
+      var canonical = document.getElementById('canonicalTag');
+      if (canonical) { canonical.href = window.location.href; }
+    })();
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5GSXBRTG4E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5GSXBRTG4E');
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="blog-style.css"/>
-  <script>
-    // Set canonical URL dynamically based on current page URL
-    (function() {
-      var canonical = document.getElementById('canonicalTag');
-      if (canonical) {
-        canonical.href = window.location.href;
-      }
-    })();
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
 </head>
@@ -102,7 +107,6 @@
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <!-- Read time + tags -->
     <div class="sidebar-widget" id="articleMeta" style="border-top:2px solid var(--ink);padding-top:1rem">
       <div class="sidebar-widget-title">Article Info</div>
       <div style="display:flex;flex-direction:column;gap:0.6rem">
@@ -122,13 +126,11 @@
       <div id="articleTags" style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem"></div>
     </div>
 
-    <!-- Table of contents -->
     <div class="sidebar-widget" id="tocWidget" style="display:none">
       <div class="sidebar-widget-title">In This Article</div>
       <ul id="tocList" style="list-style:none;display:flex;flex-direction:column;gap:0.5rem"></ul>
     </div>
 
-    <!-- Author -->
     <div class="sidebar-widget" style="border:1px solid var(--rule);padding:1.2rem">
       <div class="sidebar-widget-title">Written By</div>
       <div style="display:flex;gap:0.8rem;align-items:flex-start;margin-bottom:1rem">
@@ -143,7 +145,6 @@
       </a>
     </div>
 
-    <!-- Newsletter -->
     <div class="sidebar-widget">
       <div class="newsletter-box">
         <div class="title">Enjoyed This Article?</div>
