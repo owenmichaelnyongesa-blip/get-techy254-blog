@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Allow Google to show large image previews (required for Google Discover)
+X-Robots-Tag: max-image-preview:large
+
 Sitemap: https://get-techy254-blog.vercel.app/sitemap.xml

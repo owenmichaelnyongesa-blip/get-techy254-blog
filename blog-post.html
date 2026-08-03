@@ -3,15 +3,108 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="robots" content="index, follow, max-image-preview:large"/>
+
+  <!-- Dynamic tags — updated by JavaScript after article loads -->
   <title id="pageTitle">Article — Get.Techy254 Blog</title>
-  <meta name="description" id="pageDesc" content="Get.Techy254 Blog"/>
+  <meta name="description" id="pageDesc" content="Get.Techy254 Blog — Web development, digital business and tech tips for Kenyan entrepreneurs and developers."/>
+
+  <!-- Canonical -->
   <link rel="canonical" id="canonicalTag" href="https://get-techy254-blog.vercel.app/blog-post.html"/>
+
+  <!-- Open Graph — updated dynamically by JS -->
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="Get.Techy254"/>
+  <meta property="og:title" id="ogTitle" content="Get.Techy254 Blog"/>
+  <meta property="og:description" id="ogDesc" content="Web development, digital business and tech tips for Kenyan entrepreneurs and developers."/>
+  <meta property="og:url" id="ogUrl" content="https://get-techy254-blog.vercel.app/blog-post.html"/>
+  <meta property="og:image" id="ogImage" content="https://get-techy254-blog.vercel.app/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale" content="en_KE"/>
+  <meta property="article:author" content="Nyongesa Michael Owen"/>
+  <meta property="article:publisher" content="https://get-techy254-blog.vercel.app/"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" id="twTitle" content="Get.Techy254 Blog"/>
+  <meta name="twitter:description" id="twDesc" content="Web development, digital business and tech tips for Kenyan entrepreneurs and developers."/>
+  <meta name="twitter:image" id="twImage" content="https://get-techy254-blog.vercel.app/og-image.jpg"/>
+
   <script>
+    // Set canonical URL immediately
     (function() {
       var canonical = document.getElementById('canonicalTag');
       if (canonical) { canonical.href = window.location.href; }
+      var ogUrl = document.getElementById('ogUrl');
+      if (ogUrl) { ogUrl.setAttribute('content', window.location.href); }
     })();
+
+    // Function to update all meta tags dynamically after article loads
+    function updateMetaTags(article) {
+      if (!article) return;
+
+      var title = article.title + ' — Get.Techy254';
+      var desc = article.excerpt || 'Web development and digital business tips for Kenyan entrepreneurs.';
+      var image = article.cover_image || 'https://get-techy254-blog.vercel.app/og-image.jpg';
+      var url = window.location.href;
+
+      // Title and description
+      document.title = title;
+      document.getElementById('pageDesc').setAttribute('content', desc);
+
+      // Open Graph
+      document.getElementById('ogTitle').setAttribute('content', title);
+      document.getElementById('ogDesc').setAttribute('content', desc);
+      document.getElementById('ogImage').setAttribute('content', image);
+
+      // Twitter
+      document.getElementById('twTitle').setAttribute('content', title);
+      document.getElementById('twDesc').setAttribute('content', desc);
+      document.getElementById('twImage').setAttribute('content', image);
+
+      // JSON-LD BlogPosting schema
+      var schema = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": article.title,
+        "description": desc,
+        "image": image,
+        "url": url,
+        "datePublished": article.published_at,
+        "dateModified": article.updated_at || article.published_at,
+        "author": {
+          "@type": "Person",
+          "name": "Nyongesa Michael Owen",
+          "url": "https://get-techy254-blog.vercel.app/about.html"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Get.Techy254",
+          "url": "https://get-techy254-blog.vercel.app/"
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": url
+        },
+        "articleSection": article.category,
+        "inLanguage": "en-KE"
+      };
+
+      var schemaScript = document.getElementById('articleSchema');
+      if (!schemaScript) {
+        schemaScript = document.createElement('script');
+        schemaScript.id = 'articleSchema';
+        schemaScript.type = 'application/ld+json';
+        document.head.appendChild(schemaScript);
+      }
+      schemaScript.textContent = JSON.stringify(schema);
+    }
+
+    // Expose globally so blog-script.js can call it after fetching article
+    window.updateMetaTags = updateMetaTags;
   </script>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5GSXBRTG4E"></script>
   <script>
@@ -20,13 +113,81 @@
     gtag('js', new Date());
     gtag('config', 'G-5GSXBRTG4E');
   </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="stylesheet" href="blog-style.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="supabase-config.js"></script>
 </head>
 <body>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookieBanner" style="
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:99999;
+  background:#1C1C1C;
+  color:#FAFAF8;
+  padding:16px 24px;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  box-shadow:0 -4px 24px rgba(0,0,0,0.3);
+  font-family:Arial,sans-serif;
+  font-size:0.85rem;
+  line-height:1.5;
+">
+  <p style="margin:0;flex:1;min-width:200px;">
+    We use cookies to improve your experience and display personalised ads.
+    By continuing to use this site you agree to our
+    <a href="privacy-policy.html" style="color:#4CAF89;text-decoration:underline;">Privacy Policy</a>.
+  </p>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="
+      background:#1A5C3A;
+      color:white;
+      border:none;
+      padding:10px 20px;
+      border-radius:4px;
+      cursor:pointer;
+      font-size:0.82rem;
+      font-weight:600;
+    ">Accept All</button>
+    <button onclick="declineCookies()" style="
+      background:transparent;
+      color:#FAFAF8;
+      border:1px solid rgba(255,255,255,0.3);
+      padding:10px 20px;
+      border-radius:4px;
+      cursor:pointer;
+      font-size:0.82rem;
+    ">Decline</button>
+  </div>
+</div>
+
+<script>
+  function getCookie(name) {
+    return document.cookie.split(';').some(c => c.trim().startsWith(name + '='));
+  }
+  function acceptCookies() {
+    document.cookie = "cookieConsent=accepted; max-age=" + 60*60*24*365 + "; path=/; SameSite=Lax";
+    document.getElementById('cookieBanner').style.display = 'none';
+  }
+  function declineCookies() {
+    document.cookie = "cookieConsent=declined; max-age=" + 60*60*24*30 + "; path=/; SameSite=Lax";
+    document.getElementById('cookieBanner').style.display = 'none';
+  }
+  window.addEventListener('DOMContentLoaded', function() {
+    if (!getCookie('cookieConsent')) {
+      document.getElementById('cookieBanner').style.display = 'flex';
+    }
+  });
+</script>
 
 <button id="backToTop" aria-label="Back to top">&#x2191;</button>
 
@@ -79,7 +240,7 @@
     <p class="article-standfirst" id="articleExcerpt"></p>
     <div class="article-byline">
       <div class="byline-avatar">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231A5C3A'/%3E%3Ctext x='20' y='26' font-size='16' text-anchor='middle' fill='white' font-family='serif'%3EN%3C/text%3E%3C/svg%3E" alt="Nyongesa Michael"/>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231A5C3A'/%3E%3Ctext x='20' y='26' font-size='16' text-anchor='middle' fill='white' font-family='serif'%3EN%3C/text%3E%3C/svg%3E" alt="Nyongesa Michael Owen"/>
       </div>
       <div>
         <div class="byline-name">Nyongesa Michael Owen</div>
@@ -89,7 +250,7 @@
     </div>
   </div>
   <div class="article-hero-image" id="heroImageWrap">
-    <img id="articleCoverImg" src="" alt="Article cover"/>
+    <img id="articleCoverImg" src="" alt="Article cover" width="800" height="450"/>
   </div>
 </div>
 

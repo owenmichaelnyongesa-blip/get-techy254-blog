@@ -4,9 +4,30 @@
   <meta charset="UTF-8"/>
   <meta name="theme-color" content="#1A1208"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="description" content="Get.Techy254 Blog — Web development, digital business and tech tips for Kenyan entrepreneurs and developers."/>
-  <meta name="google-site-verification" content="HBZshD5BlG0P8Pj1HuRs5915ewnDU7rOAgifYU3uqZQ" />
-  <meta name="msvalidate.01" content="7EC6737DBDC556308B7CC464E5427657" />
+  <meta name="description" content="Get.Techy254 Blog — Web development, digital business and tech tips for Kenyan entrepreneurs and developers. Written from Nairobi."/>
+  <meta name="robots" content="index, follow, max-image-preview:large"/>
+
+  <!-- Verification -->
+  <meta name="google-site-verification" content="HBZshD5BlG0P8Pj1HuRs5915ewnDU7rOAgifYU3uqZQ"/>
+  <meta name="msvalidate.01" content="7EC6737DBDC556308B7CC464E5427657"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Get.Techy254"/>
+  <meta property="og:title" content="Get.Techy254 Blog — Web Dev & Digital Business in Kenya"/>
+  <meta property="og:description" content="Web development, digital business and tech tips for Kenyan entrepreneurs and developers. Written from Nairobi."/>
+  <meta property="og:url" content="https://get-techy254-blog.vercel.app/"/>
+  <meta property="og:image" content="https://get-techy254-blog.vercel.app/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:locale" content="en_KE"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Get.Techy254 Blog — Web Dev & Digital Business in Kenya"/>
+  <meta name="twitter:description" content="Web development, digital business and tech tips for Kenyan entrepreneurs and developers. Written from Nairobi."/>
+  <meta name="twitter:image" content="https://get-techy254-blog.vercel.app/og-image.jpg"/>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5GSXBRTG4E"></script>
   <script>
@@ -15,16 +36,151 @@
     gtag('js', new Date());
     gtag('config', 'G-5GSXBRTG4E');
   </script>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://get-techy254-blog.vercel.app/#organization",
+        "name": "Get.Techy254",
+        "url": "https://get-techy254-blog.vercel.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://get-techy254-blog.vercel.app/og-image.jpg"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+254736566870",
+          "contactType": "customer service",
+          "availableLanguage": ["English", "Swahili"]
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nairobi",
+          "addressCountry": "KE"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://get-techy254-blog.vercel.app/#author",
+        "name": "Nyongesa Michael Owen",
+        "url": "https://get-techy254-blog.vercel.app/about.html",
+        "jobTitle": "Web & Graphic Designer",
+        "worksFor": {
+          "@id": "https://get-techy254-blog.vercel.app/#organization"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nairobi",
+          "addressCountry": "KE"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://get-techy254-blog.vercel.app/#website",
+        "url": "https://get-techy254-blog.vercel.app/",
+        "name": "Get.Techy254 Blog",
+        "description": "Web development, digital business and tech tips for Kenyan entrepreneurs and developers.",
+        "publisher": {
+          "@id": "https://get-techy254-blog.vercel.app/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://get-techy254-blog.vercel.app/?search={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        },
+        "inLanguage": "en-KE"
+      }
+    ]
+  }
+  </script>
+
   <title>Get.Techy254 Blog — Web Dev &amp; Digital Business in Kenya</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="preconnect" href="https://cdn.jsdelivr.net"/>
   <link rel="stylesheet" href="blog-style.css"/>
   <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="supabase-config.js"></script>
 </head>
 <body>
+
+<!-- COOKIE CONSENT BANNER -->
+<div id="cookieBanner" style="
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:99999;
+  background:#1C1C1C;
+  color:#FAFAF8;
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  box-shadow:0 -4px 24px rgba(0,0,0,0.3);
+  font-family:Arial,sans-serif;
+  font-size:0.85rem;
+  line-height:1.5;
+">
+  <p style="margin:0;flex:1;min-width:200px;">
+    We use cookies to improve your experience and display personalised ads.
+    By continuing to use this site you agree to our
+    <a href="privacy-policy.html" style="color:#4CAF89;text-decoration:underline;">Privacy Policy</a>.
+  </p>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="
+      background:#1A5C3A;
+      color:white;
+      border:none;
+      padding:10px 20px;
+      border-radius:4px;
+      cursor:pointer;
+      font-size:0.82rem;
+      font-weight:600;
+    ">Accept All</button>
+    <button onclick="declineCookies()" style="
+      background:transparent;
+      color:#FAFAF8;
+      border:1px solid rgba(255,255,255,0.3);
+      padding:10px 20px;
+      border-radius:4px;
+      cursor:pointer;
+      font-size:0.82rem;
+    ">Decline</button>
+  </div>
+</div>
+
+<script>
+  // Cookie consent logic
+  function getCookie(name) {
+    return document.cookie.split(';').some(c => c.trim().startsWith(name + '='));
+  }
+  function acceptCookies() {
+    document.cookie = "cookieConsent=accepted; max-age=" + 60*60*24*365 + "; path=/; SameSite=Lax";
+    document.getElementById('cookieBanner').style.display = 'none';
+  }
+  function declineCookies() {
+    document.cookie = "cookieConsent=declined; max-age=" + 60*60*24*30 + "; path=/; SameSite=Lax";
+    document.getElementById('cookieBanner').style.display = 'none';
+  }
+  // Show banner if no consent yet
+  window.addEventListener('DOMContentLoaded', function() {
+    if (!getCookie('cookieConsent')) {
+      document.getElementById('cookieBanner').style.display = 'flex';
+    }
+  });
+</script>
 
 <!-- SEARCH OVERLAY -->
 <div class="search-bar" id="searchBar">
@@ -94,10 +250,7 @@
 
 <!-- HOMEPAGE HERO -->
 <div id="home-hero">
-
-  <!-- FEATURED ARTICLE -->
   <div class="featured-grid reveal" id="featuredArticle">
-    <!-- Skeleton while loading -->
     <div class="featured-image-wrap">
       <div class="skeleton" style="width:100%;height:100%;min-height:350px"></div>
     </div>
@@ -112,7 +265,6 @@
       <div class="skeleton" style="height:0.8rem;margin-top:2rem;width:50%"></div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION DIVIDER -->
@@ -124,7 +276,6 @@
 <div class="main-with-sidebar">
   <div>
     <div class="articles-grid" id="articlesGrid">
-      <!-- Skeleton cards -->
       <div class="article-card">
         <div class="article-card-img"><div class="skeleton" style="width:100%;height:100%"></div></div>
         <div class="skeleton" style="height:0.8rem;width:40%;margin-bottom:0.5rem"></div>
@@ -147,8 +298,6 @@
         <div class="skeleton" style="height:0.8rem;width:60%"></div>
       </div>
     </div>
-
-    <!-- Load More -->
     <div style="text-align:center;margin-top:3rem">
       <button id="loadMoreBtn" class="share-btn" style="padding:0.8rem 2rem;font-size:0.7rem">
         Load More Articles &#x2193;
@@ -158,7 +307,6 @@
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <!-- Newsletter -->
     <div class="sidebar-widget">
       <div class="newsletter-box">
         <div class="title">Get Articles in Your Inbox</div>
@@ -168,8 +316,6 @@
         <p id="nlMsg" style="font-size:0.72rem;color:var(--green);margin-top:0.5rem;display:none">&#x2713; Subscribed!</p>
       </div>
     </div>
-
-    <!-- Popular Posts -->
     <div class="sidebar-widget">
       <div class="sidebar-widget-title">Popular This Week</div>
       <div id="popularPosts">
@@ -187,8 +333,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Tags -->
     <div class="sidebar-widget">
       <div class="sidebar-widget-title">Browse By Tag</div>
       <div class="tag-cloud" id="tagCloud">
@@ -206,8 +350,6 @@
         <span class="tag-pill" data-tag="seo">SEO</span>
       </div>
     </div>
-
-    <!-- About Widget -->
     <div class="sidebar-widget">
       <div class="sidebar-widget-title">About The Author</div>
       <div style="display:flex;gap:0.8rem;align-items:flex-start">
