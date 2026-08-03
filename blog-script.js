@@ -55,7 +55,6 @@ function buildVideoEmbed(url) {
       <iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen loading="lazy"></iframe>
     </div>`;
   }
-  // Direct video file
   return `<div class="video-embed">
     <video controls preload="metadata">
       <source src="${url}"/>
@@ -151,7 +150,6 @@ async function loadArticles(cat = 'all', reset = false) {
 
   if (reset || currentPage === 0) {
     grid.innerHTML = '';
-    // First article is featured
     if (data && data.length > 0 && currentPage === 0 && cat === 'all') {
       renderFeatured(data[0]);
       data.shift();
@@ -167,17 +165,14 @@ async function loadArticles(cat = 'all', reset = false) {
   grid.innerHTML += data.map(renderCard).join('');
   currentPage++;
 
-  // Hide load more if fewer than page size returned
   const btn = document.getElementById('loadMoreBtn');
   if (btn) btn.style.display = data.length < PAGE_SIZE ? 'none' : 'block';
 
-  // Animate new cards
   document.querySelectorAll('.reveal:not(.visible)').forEach((el, i) => {
     setTimeout(() => el.classList.add('visible'), i * 80);
     revealObs.observe(el);
   });
 
-  // Load sidebar popular posts once
   if (currentPage === 1) loadSidebar();
 }
 
@@ -220,14 +215,10 @@ async function loadPost(slug) {
     return;
   }
 
-  // Update dynamic OG tags, Twitter tags, and JSON-LD schema (defined in blog-post.html <head>)
+  // ── UPDATE ALL META TAGS (Open Graph, Twitter, JSON-LD) ──
   if (typeof window.updateMetaTags === 'function') {
     window.updateMetaTags(article);
   }
-
-  // Update meta
-  document.title = `${article.title} — Get.Techy254 Blog`;
-  document.getElementById('pageDesc')?.setAttribute('content', article.excerpt || '');
 
   // Hero
   document.getElementById('articleCat').textContent = catLabel(article.category);
@@ -257,12 +248,11 @@ async function loadPost(slug) {
       `<span class="tag-pill" style="font-size:0.6rem">${t.trim()}</span>`).join('');
   }
 
-  // Build article body — content + optional video
+  // Build article body
   const bodyEl = document.getElementById('articleBody');
   if (bodyEl) {
     let html = '';
 
-    // Video at top if exists and position is 'top'
     if (article.video_url && article.video_position !== 'bottom') {
       html += buildVideoEmbed(article.video_url);
       if (article.video_caption) {
@@ -270,10 +260,8 @@ async function loadPost(slug) {
       }
     }
 
-    // Main content
     html += article.content || '';
 
-    // Video at bottom if position is 'bottom'
     if (article.video_url && article.video_position === 'bottom') {
       html += buildVideoEmbed(article.video_url);
       if (article.video_caption) {
@@ -295,10 +283,8 @@ async function loadPost(slug) {
 
     bodyEl.innerHTML = html;
 
-    // Build table of contents from h2 tags
     buildTOC();
 
-    // Highlight code blocks
     document.querySelectorAll('pre code').forEach(block => {
       block.innerHTML = block.innerHTML
         .replace(/(\/\/.+)/g, '<span style="color:#6A9955">$1</span>')
@@ -441,10 +427,8 @@ const cat    = params.get('cat') || 'all';
 const search = params.get('search');
 
 if (slug) {
-  // Single post page
   loadPost(slug);
 } else {
-  // Blog homepage
   if (cat !== 'all') {
     document.querySelectorAll('.cat-btn').forEach(b => {
       if (b.dataset.cat === cat) b.classList.add('active');
