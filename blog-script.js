@@ -220,6 +220,11 @@ async function loadPost(slug) {
     return;
   }
 
+  // Update dynamic OG tags, Twitter tags, and JSON-LD schema (defined in blog-post.html <head>)
+  if (typeof window.updateMetaTags === 'function') {
+    window.updateMetaTags(article);
+  }
+
   // Update meta
   document.title = `${article.title} — Get.Techy254 Blog`;
   document.getElementById('pageDesc')?.setAttribute('content', article.excerpt || '');
